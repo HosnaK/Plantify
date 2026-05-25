@@ -29,7 +29,7 @@ export function FAQAccordion() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <div className="mx-auto max-w-3xl rounded-2xl bg-neutral-100/90 px-2 py-2 sm:px-4 sm:py-4">
+    <div className="mx-auto max-w-3xl rounded-2xl bg-neutral-100/90 px-1 py-1 sm:px-4 sm:py-4">
       {faqItems.map((item, index) => {
         const isOpen = openIndex === index;
         return (
@@ -37,18 +37,18 @@ export function FAQAccordion() {
             <button
               type="button"
               onClick={() => setOpenIndex(isOpen ? null : index)}
-              className="flex w-full items-start gap-3 px-4 py-5 text-left"
+              className="flex w-full items-start gap-2 px-3 py-4 text-left sm:gap-3 sm:px-4 sm:py-5"
               aria-expanded={isOpen}
             >
               <span className="mt-0.5 shrink-0 text-lg leading-none text-neutral-400">
                 {isOpen ? "×" : "+"}
               </span>
-              <span className="text-base font-semibold text-neutral-950 sm:text-lg">
+              <span className="text-sm font-semibold text-neutral-950 sm:text-base md:text-lg">
                 {item.question}
               </span>
             </button>
             {isOpen && (
-              <p className="px-4 pb-5 pl-10 text-sm leading-relaxed text-neutral-600 sm:text-base">
+              <p className="px-3 pb-4 pl-8 text-sm leading-relaxed text-neutral-600 sm:px-4 sm:pb-5 sm:pl-10 sm:text-base">
                 {item.answer}
               </p>
             )}

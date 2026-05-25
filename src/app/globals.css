@@ -17,3 +17,7 @@ body {
   color: var(--foreground);
   font-family: var(--font-geist-sans), system-ui, sans-serif;
 }
+
+.perspective-\[1000px\] {
+  perspective: 1000px;
+}

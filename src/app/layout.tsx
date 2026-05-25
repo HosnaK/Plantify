@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Plantify — Grower growth tracking",
+  title: "Plantify — Green Investment Platform One Seed at a Time",
   description:
-    "Register seed codes, submit biweekly growth forms with photos, and track plant progress.",
+    "Plantify empowers growers to cultivate high-demand seedlings, track growth, and build a thriving green asset portfolio.",
 };
 
 export default function RootLayout({

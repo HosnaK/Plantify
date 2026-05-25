@@ -122,3 +122,4 @@ create policy "Users delete own growth photos"
     bucket_id = 'growth-photos'
     and auth.uid()::text = (storage.foldername(name))[1]
   );
+-- Biweekly check-in: sprout status, leaf color, pests

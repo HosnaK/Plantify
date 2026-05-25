@@ -12,7 +12,7 @@ export function RegisterSeedPanel({ errorMessage }: { errorMessage?: string | nu
         <button
           type="button"
           onClick={() => setOpen(true)}
-          className="rounded-xl bg-emerald-700 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-800"
+          className="rounded-xl bg-[#1b3d3a] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#152f2c]"
         >
           + Register new seed
         </button>
@@ -64,7 +64,7 @@ export function RegisterSeedPanel({ errorMessage }: { errorMessage?: string | nu
             </div>
             <button
               type="submit"
-              className="rounded-xl bg-emerald-700 px-5 py-2.5 text-sm font-semibold text-white hover:bg-emerald-800"
+              className="rounded-xl bg-[#1b3d3a] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#152f2c]"
             >
               Register seed
             </button>

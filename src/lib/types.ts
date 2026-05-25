@@ -13,6 +13,9 @@ export type Seed = {
   next_due_at: string;
 };
 
+export type LeafColor = "green" | "yellow" | "brown";
+export type PestsAnswer = "yes" | "no" | "other";
+
 export type GrowthReport = {
   id: string;
   seed_id: string;
@@ -20,6 +23,10 @@ export type GrowthReport = {
   height_cm: number | null;
   notes: string | null;
   photo_path: string | null;
+  has_sprouted: boolean;
+  leaf_color: LeafColor | null;
+  pests: PestsAnswer | null;
+  pests_other: string | null;
   submitted_at: string;
   period_start: string;
   period_end: string;
@@ -40,4 +47,5 @@ export type SeedWithProgress = Seed & {
   report_count: number;
   status: "on_track" | "due_soon" | "overdue";
   days_until_due: number;
+  period_complete: boolean;
 };

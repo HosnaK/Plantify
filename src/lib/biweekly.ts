@@ -43,3 +43,28 @@ export function hasReportForCurrentPeriod(
     return !isBefore(end, periodEnd) && !isAfter(end, addDays(periodEnd, 1));
   });
 }
+
+export function periodProgress(
+  nextDueAt: string,
+  periodComplete: boolean
+): { percent: number; label: string } {
+  if (periodComplete) {
+    return { percent: 100, label: "Check-in complete" };
+  }
+
+  const { periodStart, periodEnd } = currentPeriod({ next_due_at: nextDueAt });
+  const now = new Date();
+  const total = periodEnd.getTime() - periodStart.getTime();
+  const elapsed = Math.min(Math.max(now.getTime() - periodStart.getTime(), 0), total);
+  const percent = total > 0 ? Math.round((elapsed / total) * 100) : 0;
+
+  if (isAfter(now, periodEnd)) {
+    return { percent: 100, label: "Overdue" };
+  }
+
+  const daysLeft = differenceInCalendarDays(periodEnd, now);
+  return {
+    percent,
+    label: daysLeft === 0 ? "Due today" : `${daysLeft} day${daysLeft === 1 ? "" : "s"} left`,
+  };
+}

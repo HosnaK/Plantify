@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { seedStatus } from "@/lib/biweekly";
+import { hasReportForCurrentPeriod, seedStatus } from "@/lib/biweekly";
 import { syncMissedFormNotifications } from "@/lib/notifications";
 import { RegisterSeedPanel } from "@/components/RegisterSeedPanel";
 import { SeedList } from "@/components/SeedList";
@@ -51,12 +51,14 @@ export default async function DashboardPage({
   const seedsWithProgress: SeedWithProgress[] = seedList.map((seed) => {
     const seedReports = reports.filter((r) => r.seed_id === seed.id);
     const { status, daysUntilDue } = seedStatus(seed.next_due_at);
+    const period_complete = hasReportForCurrentPeriod(seedReports, seed);
     return {
       ...seed,
       reports: seedReports,
       report_count: seedReports.length,
       status,
       days_until_due: daysUntilDue,
+      period_complete,
     };
   });
 

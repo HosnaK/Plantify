@@ -33,6 +33,8 @@ supabase/migrations/001_initial_schema.sql
 
 This creates tables, RLS policies, the `growth-photos` storage bucket, and a profile trigger for new users.
 
+Then run `supabase/migrations/002_checkin_fields.sql` for sprout, leaf color, and pests fields on check-ins.
+
 ### 3. Configure auth (optional for local dev)
 
 In **Authentication → URL Configuration**, add:

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
+import { PlantifyLogo } from "@/components/PlantifyLogo";
 
 export default async function HomePage() {
   const supabase = await createClient();
@@ -12,7 +13,8 @@ export default async function HomePage() {
 
   return (
     <main className="mx-auto flex min-h-full max-w-3xl flex-col justify-center px-4 py-16">
-      <p className="text-sm font-semibold uppercase tracking-widest text-emerald-700">
+      <PlantifyLogo className="!h-12 sm:!h-14" priority />
+      <p className="mt-8 text-sm font-semibold uppercase tracking-widest text-emerald-700">
         For commercial growers
       </p>
       <h1 className="mt-3 text-4xl font-bold tracking-tight text-emerald-950 sm:text-5xl">
@@ -25,7 +27,7 @@ export default async function HomePage() {
       <div className="mt-8 flex flex-wrap gap-3">
         <Link
           href="/signup"
-          className="rounded-xl bg-emerald-700 px-6 py-3 font-semibold text-white hover:bg-emerald-800"
+          className="rounded-xl bg-[#1b3d3a] px-6 py-3 font-semibold text-white hover:bg-[#152f2c]"
         >
           Get started
         </Link>

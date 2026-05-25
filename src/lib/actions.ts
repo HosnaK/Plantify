@@ -53,9 +53,35 @@ export async function submitGrowthReport(formData: FormData) {
   if (!user) redirect("/login");
 
   const seedId = String(formData.get("seed_id") ?? "");
+  const sproutedRaw = String(formData.get("has_sprouted") ?? "");
   const heightRaw = String(formData.get("height_cm") ?? "").trim();
   const notes = String(formData.get("notes") ?? "").trim() || null;
+  const leafColor = String(formData.get("leaf_color") ?? "").trim() || null;
+  const pests = String(formData.get("pests") ?? "").trim() || null;
+  const pestsOther = String(formData.get("pests_other") ?? "").trim() || null;
   const photo = formData.get("photo") as File | null;
+
+  if (sproutedRaw !== "yes" && sproutedRaw !== "no") {
+    redirect(`/seeds/${seedId}/submit?error=${encodeURIComponent("Please indicate if your seed has sprouted.")}`);
+  }
+
+  const hasSprouted = sproutedRaw === "yes";
+
+  if (hasSprouted) {
+    if (!leafColor || !["green", "yellow", "brown"].includes(leafColor)) {
+      redirect(`/seeds/${seedId}/submit?error=${encodeURIComponent("Please select a leaf color.")}`);
+    }
+    if (!pests || !["yes", "no", "other"].includes(pests)) {
+      redirect(`/seeds/${seedId}/submit?error=${encodeURIComponent("Please answer the pests question.")}`);
+    }
+    if (pests === "other" && !pestsOther) {
+      redirect(`/seeds/${seedId}/submit?error=${encodeURIComponent("Please explain the pests you noticed.")}`);
+    }
+  }
+
+  if (!hasSprouted && (!photo || photo.size === 0)) {
+    redirect(`/seeds/${seedId}/submit?error=${encodeURIComponent("Please upload a photo of your seed.")}`);
+  }
 
   const { data: seed, error: seedError } = await supabase
     .from("seeds")
@@ -90,9 +116,13 @@ export async function submitGrowthReport(formData: FormData) {
   const { error: reportError } = await supabase.from("growth_reports").insert({
     seed_id: seedId,
     user_id: user.id,
-    height_cm: heightRaw ? Number(heightRaw) : null,
-    notes,
+    height_cm: hasSprouted && heightRaw ? Number(heightRaw) : null,
+    notes: hasSprouted ? notes : null,
     photo_path: photoPath,
+    has_sprouted: hasSprouted,
+    leaf_color: hasSprouted ? leafColor : null,
+    pests: hasSprouted ? pests : null,
+    pests_other: hasSprouted && pests === "other" ? pestsOther : null,
     submitted_at: submittedAt.toISOString(),
     period_start: periodStart.toISOString(),
     period_end: periodEnd.toISOString(),

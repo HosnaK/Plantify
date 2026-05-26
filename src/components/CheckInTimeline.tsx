@@ -72,7 +72,7 @@ export function CheckInTimeline({ reports }: { reports: GrowthReport[] }) {
                     </div>
                     <div>
                       <dt className="text-emerald-900/60">Pests</dt>
-                      <dd className="font-medium text-emerald-950 capitalize">
+                      <dd className="font-medium capitalize text-emerald-950">
                         {report.pests ?? "—"}
                         {report.pests === "other" && report.pests_other
                           ? ` — ${report.pests_other}`

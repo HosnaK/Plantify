@@ -151,6 +151,7 @@ export async function submitGrowthReport(formData: FormData) {
 
   revalidatePath("/dashboard");
   revalidatePath(`/seeds/${seedId}/submit`);
+  revalidatePath(`/seeds/${seedId}/report`);
   redirect("/dashboard");
 }
 

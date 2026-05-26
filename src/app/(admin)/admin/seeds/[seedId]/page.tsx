@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { format } from "date-fns";
 import { requireAdmin, adminStatusLabel } from "@/lib/admin";
 import { AdminStatusSelect } from "@/components/admin/AdminStatusSelect";
-import { CheckInTimeline } from "@/components/admin/CheckInTimeline";
+import { CheckInTimeline } from "@/components/CheckInTimeline";
 import type { GrowthReport, SeedAdminStatus } from "@/lib/types";
 
 export default async function AdminSeedReportPage({

@@ -1,6 +1,11 @@
+export type UserRole = "grower" | "admin";
+export type SeedAdminStatus = "active" | "mature" | "approved_for_buyback";
+
 export type Profile = {
   id: string;
   full_name: string | null;
+  email: string | null;
+  role: UserRole;
   created_at: string;
 };
 
@@ -11,6 +16,18 @@ export type Seed = {
   plant_name: string;
   registered_at: string;
   next_due_at: string;
+  admin_status: SeedAdminStatus;
+};
+
+export type AdminSeedRow = {
+  id: string;
+  seed_code: string;
+  plant_name: string;
+  registered_at: string;
+  admin_status: SeedAdminStatus;
+  grower_name: string | null;
+  grower_email: string | null;
+  check_in_count: number;
 };
 
 export type LeafColor = "green" | "yellow" | "brown";

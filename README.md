@@ -15,6 +15,69 @@ A Next.js platform for commercial growers to register seed codes, submit biweekl
 - Biweekly growth forms: height, notes, photo upload
 - Dashboard with per-seed status (on track / due soon / overdue)
 - Notifications when a biweekly form is overdue (synced on dashboard & notifications page)
+- **Admin panel** (`/admin`) — all seeds, inline status updates, full check-in reports per seed
+
+## Setup
+
+### 1. Create a Supabase project
+
+1. Go to [supabase.com](https://supabase.com) and create a project.
+2. In **Project Settings → API**, copy the **Project URL** and **anon public** key.
+
+### 2. Run the database migration
+
+In the Supabase **SQL Editor**, paste and run the contents of:
+
+```
+supabase/migrations/001_initial_schema.sql
+```
+
+This creates tables, RLS policies, the `growth-photos` storage bucket, and a profile trigger for new users.
+
+Then run `supabase/migrations/002_checkin_fields.sql` for sprout, leaf color, and pests fields on check-ins.
+
+Then run `supabase/migrations/003_admin.sql` for admin roles and seed pipeline status.
+
+### Admin access
+
+After migration 003, promote a user to admin in the SQL Editor:
+
+```sql
+update public.profiles set role = 'admin' where email = 'your@email.com';
+```
+
+Open `/admin` while signed in as that user. Non-admins are redirected to the grower dashboard.
+
+### 3. Configure auth (optional for local dev)
+
+In **Authentication → URL Configuration**, add:
+
+- Site URL: `http://localhost:3000`
+- Redirect URLs: `http://localhost:3000/auth/callback`
+
+For email confirmation off during development: **Authentication → Providers → Email** → disable “Confirm email”.
+
+### 4. Environment variables
+
+```bash
+cp .env.local.example .env.local
+```
+
+Edit `.env.local`:
+
+```
+NEXT_PUBLIC_SUPABASE_URL=https://xxxx.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbG...
+```
+
+### 5. Run locally
+
+```bash
+npm install
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000).
 
 ## Project structure
 
@@ -23,6 +86,7 @@ src/
   app/
     (auth)/          # Login & signup
     (app)/           # Protected: dashboard, seeds, notifications
+    (admin)/admin/   # Admin-only: seed registry & reports
     auth/callback/   # Supabase OAuth/email callback
   components/        # UI components
   lib/

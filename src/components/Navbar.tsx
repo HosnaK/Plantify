@@ -19,6 +19,14 @@ export async function Navbar() {
 
   const unread = count ?? 0;
 
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("role")
+    .eq("id", user.id)
+    .single();
+
+  const isAdmin = profile?.role === "admin";
+
   return (
     <header className="border-b border-[#1b3d3a]/10 bg-white/80 backdrop-blur">
       <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-4">
@@ -35,6 +43,11 @@ export async function Navbar() {
               </span>
             )}
           </Link>
+          {isAdmin && (
+            <Link href="/admin" className="font-semibold text-emerald-800 hover:text-emerald-600">
+              Admin
+            </Link>
+          )}
           <form action={signOut}>
             <button
               type="submit"

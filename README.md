@@ -48,6 +48,12 @@ update public.profiles set role = 'admin' where email = 'your@email.com';
 
 Open `/admin` while signed in as that user. Non-admins are redirected to the grower dashboard.
 
+**If `/admin` sends you to login:** you are not signed in on that exact hostname (see www below), or the session cookie is missing.
+
+**If you sign in but land on `/dashboard` instead of admin:** your account does not have `role = 'admin'` in `public.profiles`.
+
+**`www` vs apex (`plantify.me`):** Auth cookies are tied to the host you used when you signed in. If you signed in on `https://plantify.me` but open `https://www.plantify.me/admin`, the browser may not send the session cookie and you will look logged out. Fix by picking one canonical URL in Vercel (redirect `www` → apex or the reverse) and use the same host in Supabase **Authentication → URL Configuration** (Site URL and Redirect URLs for both hosts if you keep both).
+
 ### 3. Configure auth (optional for local dev)
 
 In **Authentication → URL Configuration**, add:

@@ -3,10 +3,18 @@
 import { useState } from "react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
+import { safeInternalPath } from "@/lib/safe-redirect";
 
 type Mode = "login" | "signup";
 
-export function AuthForm({ mode }: { mode: Mode }) {
+export function AuthForm({
+  mode,
+  redirectAfterLogin,
+}: {
+  mode: Mode;
+  /** From ?next= on login page — must be a safe internal path */
+  redirectAfterLogin?: string | null;
+}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
@@ -47,7 +55,8 @@ export function AuthForm({ mode }: { mode: Mode }) {
       setError(signInError.message);
       return;
     }
-    window.location.href = "/dashboard";
+    window.location.href =
+      safeInternalPath(redirectAfterLogin) ?? "/dashboard";
   }
 
   return (

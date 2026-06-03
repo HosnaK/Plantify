@@ -36,7 +36,7 @@ export function LandingPage() {
         <div className="relative z-10 mx-auto flex min-h-[100dvh] max-w-6xl items-center justify-center px-4 pb-12 pt-28 sm:min-h-[92vh] sm:pb-16 sm:pt-32">
           <div className="w-full max-w-xl rounded-sm bg-white px-5 py-8 text-center shadow-[0_8px_40px_rgba(0,0,0,0.08)] sm:px-10 sm:py-12 md:px-14 md:py-14">
             <div className="flex justify-center">
-              <PlantifyLogo className="!h-11 sm:!h-14 md:!h-16" priority />
+              <PlantifyLogo className="!h-[5.5rem] sm:!h-[7rem] md:!h-[8rem]" priority />
             </div>
             <p className="mt-4 text-base leading-snug text-neutral-500 sm:mt-6 sm:text-lg md:text-xl">
               Green Investment Platform One Seed at a Time
@@ -158,7 +158,7 @@ export function LandingPage() {
       </section>
 
       <footer className="border-t border-neutral-200 px-4 py-8 text-center text-sm text-neutral-500">
-        <PlantifyLogo className="mx-auto !h-7 sm:!h-8 opacity-80" />
+        <PlantifyLogo className="mx-auto !h-14 sm:!h-16 opacity-80" />
         <p className="mt-3">
           <Link href="/login" className="underline hover:text-neutral-800">
             Sign in

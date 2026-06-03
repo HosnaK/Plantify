@@ -7,7 +7,7 @@ export function AdminNavbar() {
     <header className="border-b border-emerald-900/10 bg-white/90 backdrop-blur">
       <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-4">
         <div className="flex items-center gap-3">
-          <PlantifyLogo href="/admin" />
+          <PlantifyLogo />
           <span className="rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-semibold text-emerald-800">
             Admin
           </span>

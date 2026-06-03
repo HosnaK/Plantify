@@ -57,12 +57,15 @@ begin
   end if;
 end $$;
 
--- Admin can read all profiles
+-- Admin can read all profiles (idempotent if re-run)
+drop policy if exists "Admins read all profiles" on public.profiles;
 create policy "Admins read all profiles"
   on public.profiles for select
   using (public.is_admin());
 
 -- Admin can read/update all seeds
+drop policy if exists "Admins read all seeds" on public.seeds;
+drop policy if exists "Admins update all seeds" on public.seeds;
 create policy "Admins read all seeds"
   on public.seeds for select
   using (public.is_admin());
@@ -73,6 +76,7 @@ create policy "Admins update all seeds"
   with check (public.is_admin());
 
 -- Admin can read all growth reports
+drop policy if exists "Admins read all growth reports" on public.growth_reports;
 create policy "Admins read all growth reports"
   on public.growth_reports for select
   using (public.is_admin());

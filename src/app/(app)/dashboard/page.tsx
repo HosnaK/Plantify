@@ -4,7 +4,14 @@ import { hasReportForCurrentPeriod, seedStatus } from "@/lib/biweekly";
 import { syncMissedFormNotifications } from "@/lib/notifications";
 import { RegisterSeedPanel } from "@/components/RegisterSeedPanel";
 import { SeedList } from "@/components/SeedList";
-import type { GrowthReport, SeedWithProgress } from "@/lib/types";
+import type { GrowthReport, SeedSpecies, SeedWithProgress } from "@/lib/types";
+
+function normalizeSpecies(
+  row: SeedSpecies | SeedSpecies[] | null | undefined
+): SeedSpecies | null {
+  if (row == null) return null;
+  return Array.isArray(row) ? (row[0] ?? null) : row;
+}
 
 const registerErrors: Record<string, string> = {
   missing_fields: "Seed code and plant name are required.",
@@ -31,7 +38,7 @@ export default async function DashboardPage({
 
   const { data: seeds } = await supabase
     .from("seeds")
-    .select("*")
+    .select("*, seed_species(*)")
     .eq("user_id", user.id)
     .order("registered_at", { ascending: false });
 
@@ -52,8 +59,13 @@ export default async function DashboardPage({
     const seedReports = reports.filter((r) => r.seed_id === seed.id);
     const { status, daysUntilDue } = seedStatus(seed.next_due_at);
     const period_complete = hasReportForCurrentPeriod(seedReports, seed);
+    const seed_species = normalizeSpecies(
+      seed.seed_species as SeedSpecies | SeedSpecies[] | null | undefined
+    );
     return {
       ...seed,
+      species_id: seed.species_id ?? null,
+      seed_species,
       reports: seedReports,
       report_count: seedReports.length,
       status,

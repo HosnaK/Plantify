@@ -1,5 +1,18 @@
 export type UserRole = "grower" | "admin";
 export type SeedAdminStatus = "active" | "mature" | "approved_for_buyback";
+export type DifficultyLevel = "Easy" | "Medium" | "Hard";
+
+export type SeedSpecies = {
+  id: string;
+  plant_name: string;
+  code_prefix: string;
+  buyback_period_weeks: number;
+  seed_price: number;
+  full_buyback_price: number;
+  difficulty_level: DifficultyLevel;
+  environment_preferences: string;
+  created_at?: string;
+};
 
 export type Profile = {
   id: string;
@@ -17,6 +30,7 @@ export type Seed = {
   registered_at: string;
   next_due_at: string;
   admin_status: SeedAdminStatus;
+  species_id: string | null;
 };
 
 export type AdminSeedRow = {
@@ -65,4 +79,5 @@ export type SeedWithProgress = Seed & {
   status: "on_track" | "due_soon" | "overdue";
   days_until_due: number;
   period_complete: boolean;
+  seed_species: SeedSpecies | null;
 };

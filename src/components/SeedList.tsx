@@ -2,6 +2,7 @@ import Link from "next/link";
 import { format } from "date-fns";
 import type { SeedWithProgress } from "@/lib/types";
 import { CheckInProgress } from "@/components/CheckInProgress";
+import { EstimatedValueBlock } from "@/components/EstimatedValueBlock";
 import { SeedProgressBar } from "@/components/SeedProgressBar";
 
 const statusStyles = {
@@ -53,6 +54,7 @@ export function SeedList({ seeds }: { seeds: SeedWithProgress[] }) {
                 periodComplete={seed.period_complete}
                 status={seed.status}
               />
+              <EstimatedValueBlock species={seed.seed_species} checkInCount={seed.report_count} />
             </div>
             <div className="flex shrink-0 flex-col gap-2 sm:flex-row lg:flex-col lg:min-w-[11rem]">
               <Link

@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { currentPeriod, nextDueFrom } from "@/lib/biweekly";
 import { syncMissedFormNotifications } from "@/lib/notifications";
+import { codePrefixFromSeedCode } from "@/lib/seed-value";
 
 export async function signOut() {
   const supabase = await createClient();
@@ -26,6 +27,12 @@ export async function registerSeed(formData: FormData) {
     redirect("/dashboard?error=missing_fields");
   }
 
+  const { data: speciesMatch } = await supabase
+    .from("seed_species")
+    .select("id")
+    .eq("code_prefix", codePrefixFromSeedCode(seedCode))
+    .maybeSingle();
+
   const now = new Date();
   const { error } = await supabase.from("seeds").insert({
     user_id: user.id,
@@ -33,6 +40,7 @@ export async function registerSeed(formData: FormData) {
     plant_name: plantName,
     registered_at: now.toISOString(),
     next_due_at: nextDueFrom(now).toISOString(),
+    species_id: speciesMatch?.id ?? null,
   });
 
   if (error) {

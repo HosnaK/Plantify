@@ -16,6 +16,9 @@ export function AdminNavbar() {
           <Link href="/admin" className="hover:text-emerald-700">
             All seeds
           </Link>
+          <Link href="/admin/library" className="hover:text-emerald-700">
+            Seed library
+          </Link>
           <Link href="/dashboard" className="hover:text-emerald-700">
             Grower app
           </Link>

@@ -10,7 +10,7 @@ A Next.js platform for commercial growers to register seed codes, submit biweekl
 
 ## Features
 
-- Email/password sign up and sign in
+- Email/password sign up and sign in, plus **forgot password** (email reset link)
 - Register seed codes (unique per grower)
 - Biweekly growth forms: height, notes, photo upload
 - Dashboard with per-seed status (on track / due soon / overdue)
@@ -48,6 +48,36 @@ update public.profiles set role = 'admin' where email = 'your@email.com';
 
 Open `/admin` while signed in as that user. Non-admins are redirected to the grower dashboard.
 
+### Super admin account (`admin@plantify.me`)
+
+Supabase sign-in uses **email**, not a separate username. The bootstrap account is:
+
+- **Email:** `admin@plantify.me`
+- **Password:** `Plantify11!`
+
+Create or reset this user from your machine (needs the **service role** key — never expose it in the browser or commit it):
+
+1. In Supabase → **Project Settings → API**, copy the **service_role** secret.
+2. Add to `.env.local`: `SUPABASE_SERVICE_ROLE_KEY=...`
+3. From the project root: `npm run seed:admin`
+
+That creates the user if missing, sets the password, confirms email, and sets `profiles.role` to `admin`.
+
+**Manual alternative:** Authentication → **Users** → Add user → email `admin@plantify.me`, password `Plantify11!`, confirm email. Then run:
+
+```sql
+update public.profiles set role = 'admin', full_name = 'Super Admin'
+where email = 'admin@plantify.me';
+```
+
+### Forgot password
+
+The sign-in page links to **Forgot password**. Add every URL Supabase may redirect to after a reset email:
+
+- **Redirect URLs:** `https://plantify.me/auth/callback`, `https://www.plantify.me/auth/callback` (and localhost for dev).
+
+If sign-in fails with “Email not confirmed”, either confirm the address from the inbox or disable **Confirm email** under Authentication → Providers → Email for testing.
+
 **If `/admin` sends you to login:** you are not signed in on that exact hostname (see www below), or the session cookie is missing.
 
 **If you sign in but land on `/dashboard` instead of admin:** your account does not have `role = 'admin'` in `public.profiles`.
@@ -58,8 +88,8 @@ Open `/admin` while signed in as that user. Non-admins are redirected to the gro
 
 In **Authentication → URL Configuration**, add:
 
-- Site URL: `http://localhost:3000`
-- Redirect URLs: `http://localhost:3000/auth/callback`
+- Site URL: `http://localhost:3000` (and your production URL, e.g. `https://plantify.me`)
+- Redirect URLs: `http://localhost:3000/auth/callback`, `https://plantify.me/auth/callback`, `https://www.plantify.me/auth/callback`
 
 For email confirmation off during development: **Authentication → Providers → Email** → disable “Confirm email”.
 

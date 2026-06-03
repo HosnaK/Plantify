@@ -33,6 +33,7 @@ export async function updateSession(request: NextRequest) {
   const isAuthRoute =
     path.startsWith("/login") ||
     path.startsWith("/signup") ||
+    path.startsWith("/forgot-password") ||
     path.startsWith("/auth");
   const isPublicRoute = path === "/" || isAuthRoute;
 
@@ -43,7 +44,7 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  if (user && (path === "/login" || path === "/signup")) {
+  if (user && (path === "/login" || path === "/signup" || path === "/forgot-password")) {
     const url = request.nextUrl.clone();
     url.pathname = "/dashboard";
     return NextResponse.redirect(url);

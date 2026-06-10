@@ -6,30 +6,72 @@ import { YouTubeEmbed } from "@/components/landing/YouTubeEmbed";
 import { HoverTiltBox } from "@/components/landing/HoverTiltBox";
 import { FAQAccordion } from "@/components/landing/FAQAccordion";
 import { OurTreesSection } from "@/components/landing/OurTreesSection";
-import { LANDING_IMAGES, teamPhotoUrl } from "@/components/landing/landing-image-urls";
+import {
+  LANDING_IMAGES,
+  teamPhotoUrl,
+  type TeamPhotoExtension,
+} from "@/components/landing/landing-image-urls";
 
 const teamMembers = [
   {
     name: "Hosna Kachooee",
     role: "Founder & Chief Executive Officer",
     slug: "hosna-kachooee",
+    linkedInUrl: "https://www.linkedin.com/in/hosna-kachooee/",
   },
-  { name: "John Darden", role: "Chief Technical Officer", slug: "john-darden" },
-  { name: "Joanna Kurylo", role: "Advisor", slug: "joanna-kurylo" },
-  { name: "Eva Molina", role: "Chief Performance Officer", slug: "eva-molina" },
-  { name: "Mohsen Kachooee", role: "Advisor", slug: "mohsen-kachooee" },
-  { name: "Jacobo Echeverry", role: "Programmer", slug: "jacobo-echeverry" },
+  {
+    name: "John Darden",
+    role: "Chief Technical Officer",
+    slug: "john-darden",
+    teamPhotoExt: "jpeg" satisfies TeamPhotoExtension,
+    linkedInUrl: "https://www.linkedin.com/in/johndarden2022/",
+  },
+  {
+    name: "Joanna Kurylo",
+    role: "Advisor",
+    slug: "joanna-kurylo",
+    teamPhotoExt: "jpeg" satisfies TeamPhotoExtension,
+    linkedInUrl: "https://www.linkedin.com/in/joannakurylo/",
+  },
+  {
+    name: "Eva Molina",
+    role: "Chief Performance Officer",
+    slug: "eva-molina",
+    linkedInUrl: "https://www.linkedin.com/in/eva-i-chan/",
+  },
+  {
+    name: "Mohsen Kachooee",
+    role: "Advisor",
+    slug: "mohsen-kachooee",
+    linkedInUrl: "https://www.linkedin.com/in/kachooee/",
+  },
+  {
+    name: "Jacobo Echeverry",
+    role: "Programmer",
+    slug: "jacobo-echeverry",
+    teamPhotoExt: "webp" satisfies TeamPhotoExtension,
+    linkedInUrl: "https://www.linkedin.com/in/jacoboecheverry/",
+  },
   {
     name: "Will Chan",
     role: "Chief Product Manager",
     slug: "will-chan",
     usePlaceholderPhoto: true,
+    linkedInUrl: "https://www.linkedin.com/in/wc1766/",
   },
-  { name: "Jonathan Sepulveda", role: "Programmer", slug: "jonathan-sepulveda" },
+  {
+    name: "Jonathan Sepulveda",
+    role: "Programmer",
+    slug: "jonathan-sepulveda",
+    teamPhotoExt: "webp" satisfies TeamPhotoExtension,
+    linkedInUrl: "https://www.linkedin.com/in/jonathan-s123/",
+  },
 ] as const satisfies ReadonlyArray<{
   name: string;
   role: string;
   slug: string;
+  linkedInUrl: string;
+  teamPhotoExt?: TeamPhotoExtension;
   usePlaceholderPhoto?: true;
 }>;
 
@@ -99,11 +141,11 @@ export function LandingPage({ isAuthenticated }: { isAuthenticated: boolean }) {
       {/* Why Seeds? */}
       <section className="mx-auto grid max-w-6xl items-center gap-8 px-4 py-14 md:grid-cols-2 md:gap-12 md:py-20 lg:gap-16 lg:py-24">
         <HoverTiltBox className="md:justify-self-start">
-          <div className="mx-auto flex aspect-square w-full max-h-[min(50vh,400px)] max-w-md overflow-hidden rounded-2xl border border-emerald-200/60 bg-neutral-100 shadow-sm">
+          <div className="mx-auto box-border flex aspect-square w-full max-h-[min(50vh,400px)] max-w-md items-center justify-center overflow-hidden rounded-2xl border border-emerald-200/60 bg-white p-5 shadow-sm sm:p-7">
             <img
               src={LANDING_IMAGES.whySeedsPlant}
               alt="Plant and seedlings"
-              className="h-full w-full object-cover"
+              className="max-h-full max-w-full object-contain"
             />
           </div>
         </HoverTiltBox>
@@ -145,11 +187,11 @@ export function LandingPage({ isAuthenticated }: { isAuthenticated: boolean }) {
           </Link>
         </div>
         <HoverTiltBox className="order-1 md:order-2 md:justify-self-end">
-          <div className="mx-auto flex aspect-[9/16] max-h-[min(70vh,520px)] w-full max-w-md overflow-hidden rounded-2xl border border-emerald-200/60 bg-neutral-100 shadow-sm">
+          <div className="mx-auto box-border flex aspect-[9/16] max-h-[min(70vh,520px)] w-full max-w-md items-center justify-center overflow-hidden rounded-2xl border border-emerald-200/60 bg-white p-4 shadow-sm sm:p-6">
             <img
               src={LANDING_IMAGES.growingMadeEasyApp}
               alt="Plantify grower app on a phone"
-              className="h-full w-full object-cover"
+              className="max-h-full max-w-full object-contain"
             />
           </div>
         </HoverTiltBox>
@@ -182,7 +224,10 @@ export function LandingPage({ isAuthenticated }: { isAuthenticated: boolean }) {
                   </div>
                 ) : (
                   <img
-                    src={teamPhotoUrl(member.slug)}
+                    src={teamPhotoUrl(
+                      member.slug,
+                      "teamPhotoExt" in member ? member.teamPhotoExt : "jpg",
+                    )}
                     alt={member.name}
                     className="h-full w-full object-cover"
                   />
@@ -193,9 +238,14 @@ export function LandingPage({ isAuthenticated }: { isAuthenticated: boolean }) {
                   {member.name}
                 </h3>
                 <p className="mt-1 text-xs text-neutral-500 sm:text-sm">{member.role}</p>
-                <div className="mt-2 inline-block rounded-md bg-neutral-950 px-2.5 py-1 text-[10px] font-medium text-white sm:mt-3 sm:px-3 sm:py-1.5 sm:text-xs">
+                <a
+                  href={member.linkedInUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-2 inline-block rounded-md bg-neutral-950 px-2.5 py-1 text-[10px] font-medium text-white transition hover:bg-neutral-800 sm:mt-3 sm:px-3 sm:py-1.5 sm:text-xs"
+                >
                   LinkedIn
-                </div>
+                </a>
               </div>
             </article>
           ))}

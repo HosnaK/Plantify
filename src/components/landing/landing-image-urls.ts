@@ -3,7 +3,8 @@
  *
  * 1. Dashboard → Storage → use a **public** bucket (or set bucket to public).
  * 2. Upload layout: homepage images in the bucket root (`why-seeds-plant.png`,
- *    `growing-made-easy-app.png`), team under `team/<slug>.jpg`, trees under
+ *    `growing-made-easy-app.png`), team under `team/<slug>.<ext>` (default `.jpg`),
+ *    trees under
  *    `trees/<tree-id>.<ext>` (defaults to `.jpg`; set per-tree extension in
  *    `OurTreesSection` when needed).
  * 3. Replace `YOUR_PROJECT_REF` with your project ref (Project Settings → API;
@@ -23,9 +24,11 @@ export const LANDING_IMAGES = {
   growingMadeEasyApp: `${LANDING_STORAGE_BASE}/growing-made-easy-app.png`,
 } as const;
 
-/** Team headshots: upload e.g. `team/hosna-kachooee.jpg` */
-export function teamPhotoUrl(slug: string): string {
-  return `${LANDING_STORAGE_BASE}/team/${slug}.jpg`;
+export type TeamPhotoExtension = "jpg" | "jpeg" | "png" | "webp";
+
+/** Team headshots under `team/<slug>.<ext>` (default `jpg`). */
+export function teamPhotoUrl(slug: string, ext: TeamPhotoExtension = "jpg"): string {
+  return `${LANDING_STORAGE_BASE}/team/${slug}.${ext}`;
 }
 
 type TreePhotoExtension = "jpg" | "jpeg" | "png" | "webp";

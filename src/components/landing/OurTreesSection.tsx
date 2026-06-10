@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { treePhotoUrl } from "@/components/landing/landing-image-urls";
 
 type Difficulty = "Easy" | "Medium" | "Hard";
 
@@ -13,6 +14,8 @@ type TreeOffering = {
   difficulty: Difficulty;
   environmentPreferences: string;
   careTips: string;
+  /** Storage file extension under `trees/` when not `.jpg` */
+  treePhotoExt?: "jpg" | "jpeg" | "png" | "webp";
 };
 
 const trees: TreeOffering[] = [
@@ -39,6 +42,7 @@ const trees: TreeOffering[] = [
     difficulty: "Easy",
     environmentPreferences: "Full sun, well-drained soil; grows well indoors in large pots.",
     careTips: "Moderate watering.",
+    treePhotoExt: "jpeg",
   },
   {
     id: "mulberry",
@@ -51,6 +55,7 @@ const trees: TreeOffering[] = [
     difficulty: "Easy",
     environmentPreferences: "Full sun to partial shade, adaptable to most soils.",
     careTips: "Moderate water.",
+    treePhotoExt: "jpeg",
   },
   {
     id: "paulownia",
@@ -96,38 +101,14 @@ const difficultyClass: Record<Difficulty, string> = {
   Hard: "bg-red-100 text-red-800 ring-1 ring-red-200/80",
 };
 
-function LeafIcon({ className }: { className?: string }) {
+function TreePhoto({ tree }: { tree: TreeOffering }) {
   return (
-    <svg
-      className={className}
-      viewBox="0 0 64 64"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden
-    >
-      <path
-        d="M32 8C18 8 8 20 8 34c0 12 10 22 22 22 2 0 4-.2 6-.6C48 52 56 44 56 34 56 18 44 8 32 8Z"
-        className="fill-emerald-600/25 stroke-emerald-700/50"
-        strokeWidth="1.5"
-        strokeLinejoin="round"
+    <div className="relative aspect-[3/4] w-full overflow-hidden rounded-t-2xl bg-gradient-to-b from-emerald-100/90 to-emerald-50/95 ring-1 ring-emerald-200/60">
+      <img
+        src={treePhotoUrl(tree.id, tree.treePhotoExt ?? "jpg")}
+        alt={tree.commonName}
+        className="h-full w-full object-cover"
       />
-      <path
-        d="M32 12v40M24 22c4-2 8-2 16 0M22 32c6-3 14-3 20 0M24 42c4 2 8 2 16 0"
-        className="stroke-emerald-700/45"
-        strokeWidth="1.25"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
-
-function TreePhotoPlaceholder() {
-  return (
-    <div className="relative flex aspect-[3/4] w-full flex-col items-center justify-center rounded-t-2xl bg-gradient-to-b from-emerald-100/90 to-emerald-50/95 ring-1 ring-emerald-200/60">
-      <LeafIcon className="h-16 w-16 sm:h-20 sm:w-20" />
-      <p className="mt-3 px-4 text-center text-xs font-medium tracking-wide text-emerald-800/70 uppercase">
-        Photo coming soon
-      </p>
     </div>
   );
 }
@@ -135,7 +116,7 @@ function TreePhotoPlaceholder() {
 function TreeCard({ tree }: { tree: TreeOffering }) {
   return (
     <article className="group flex flex-col overflow-hidden rounded-2xl border border-emerald-100 bg-white shadow-sm shadow-emerald-900/5 transition duration-300 hover:-translate-y-1 hover:border-emerald-200/90 hover:shadow-lg hover:shadow-emerald-900/10">
-      <TreePhotoPlaceholder />
+      <TreePhoto tree={tree} />
       <div className="flex flex-1 flex-col p-4 sm:p-5">
         <div className="flex flex-wrap items-start justify-between gap-2">
           <div className="min-w-0">

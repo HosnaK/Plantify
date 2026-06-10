@@ -3,20 +3,35 @@ import { PlantifyLogo } from "@/components/PlantifyLogo";
 import { BuyerInquiryForm } from "@/components/landing/BuyerInquiryForm";
 import { LandingNav } from "@/components/landing/LandingNav";
 import { YouTubeEmbed } from "@/components/landing/YouTubeEmbed";
-import { HoverTiltBox, ImagePlaceholder } from "@/components/landing/HoverTiltBox";
+import { HoverTiltBox } from "@/components/landing/HoverTiltBox";
 import { FAQAccordion } from "@/components/landing/FAQAccordion";
 import { OurTreesSection } from "@/components/landing/OurTreesSection";
+import { LANDING_IMAGES, teamPhotoUrl } from "@/components/landing/landing-image-urls";
 
 const teamMembers = [
-  { name: "Hosna Kachooee", role: "Founder & Chief Executive Officer" },
-  { name: "John Darden", role: "Chief Technical Officer" },
-  { name: "Joanna Kurylo", role: "Advisor" },
-  { name: "Eva Molina", role: "Chief Performance Officer" },
-  { name: "Mohsen Kachooee", role: "Advisor" },
-  { name: "Jacobo Echeverry", role: "Programmer" },
-  { name: "Will Chan", role: "Chief Product Manager" },
-  { name: "Jonathan Sepulveda", role: "Programmer" },
-];
+  {
+    name: "Hosna Kachooee",
+    role: "Founder & Chief Executive Officer",
+    slug: "hosna-kachooee",
+  },
+  { name: "John Darden", role: "Chief Technical Officer", slug: "john-darden" },
+  { name: "Joanna Kurylo", role: "Advisor", slug: "joanna-kurylo" },
+  { name: "Eva Molina", role: "Chief Performance Officer", slug: "eva-molina" },
+  { name: "Mohsen Kachooee", role: "Advisor", slug: "mohsen-kachooee" },
+  { name: "Jacobo Echeverry", role: "Programmer", slug: "jacobo-echeverry" },
+  {
+    name: "Will Chan",
+    role: "Chief Product Manager",
+    slug: "will-chan",
+    usePlaceholderPhoto: true,
+  },
+  { name: "Jonathan Sepulveda", role: "Programmer", slug: "jonathan-sepulveda" },
+] as const satisfies ReadonlyArray<{
+  name: string;
+  role: string;
+  slug: string;
+  usePlaceholderPhoto?: true;
+}>;
 
 export function LandingPage({ isAuthenticated }: { isAuthenticated: boolean }) {
   return (
@@ -84,7 +99,13 @@ export function LandingPage({ isAuthenticated }: { isAuthenticated: boolean }) {
       {/* Why Seeds? */}
       <section className="mx-auto grid max-w-6xl items-center gap-8 px-4 py-14 md:grid-cols-2 md:gap-12 md:py-20 lg:gap-16 lg:py-24">
         <HoverTiltBox className="md:justify-self-start">
-          <ImagePlaceholder aspect="square" caption="Plant visual" />
+          <div className="mx-auto flex aspect-square w-full max-h-[min(50vh,400px)] max-w-md overflow-hidden rounded-2xl border border-emerald-200/60 bg-neutral-100 shadow-sm">
+            <img
+              src={LANDING_IMAGES.whySeedsPlant}
+              alt="Plant and seedlings"
+              className="h-full w-full object-cover"
+            />
+          </div>
         </HoverTiltBox>
         <div className="text-center md:text-left">
           <h2 className="text-2xl font-bold sm:text-3xl md:text-4xl">Why Seeds?</h2>
@@ -124,7 +145,13 @@ export function LandingPage({ isAuthenticated }: { isAuthenticated: boolean }) {
           </Link>
         </div>
         <HoverTiltBox className="order-1 md:order-2 md:justify-self-end">
-          <ImagePlaceholder aspect="phone" caption="App mockup" />
+          <div className="mx-auto flex aspect-[9/16] max-h-[min(70vh,520px)] w-full max-w-md overflow-hidden rounded-2xl border border-emerald-200/60 bg-neutral-100 shadow-sm">
+            <img
+              src={LANDING_IMAGES.growingMadeEasyApp}
+              alt="Plantify grower app on a phone"
+              className="h-full w-full object-cover"
+            />
+          </div>
         </HoverTiltBox>
       </section>
 
@@ -148,8 +175,18 @@ export function LandingPage({ isAuthenticated }: { isAuthenticated: boolean }) {
               key={member.name}
               className="overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm"
             >
-              <div className="flex aspect-square items-center justify-center bg-neutral-100 text-sm text-neutral-400">
-                Photo
+              <div className="relative aspect-square overflow-hidden bg-neutral-100">
+                {"usePlaceholderPhoto" in member && member.usePlaceholderPhoto ? (
+                  <div className="flex h-full w-full items-center justify-center text-sm text-neutral-400">
+                    Photo
+                  </div>
+                ) : (
+                  <img
+                    src={teamPhotoUrl(member.slug)}
+                    alt={member.name}
+                    className="h-full w-full object-cover"
+                  />
+                )}
               </div>
               <div className="p-3 sm:p-4">
                 <h3 className="text-sm font-bold text-neutral-950 sm:text-base">

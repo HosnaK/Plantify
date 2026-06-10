@@ -12,7 +12,8 @@ A Next.js platform for commercial growers to register seed codes, submit biweekl
 
 - Email/password sign up and sign in, plus **forgot password** (email reset link)
 - Register seed codes (unique per grower)
-- Biweekly growth forms: height, notes, photo upload
+- Biweekly growth forms: height, notes, **1–3 progress photos** (stored as public URLs), sprout status
+- Grower **profile** (`/profile`) — age, occupation, experience, growing space; same fields collected at **sign up**
 - Dashboard with per-seed status (on track / due soon / overdue)
 - Notifications when a biweekly form is overdue (synced on dashboard & notifications page)
 - **Admin panel** (`/admin`) — all seeds, inline status updates, full check-in reports per seed
@@ -42,7 +43,7 @@ Then run `supabase/migrations/003_admin.sql` for admin roles and seed pipeline s
 
 Then run `supabase/migrations/004_seed_species.sql` for the admin-only species library (linked from grower seed codes by prefix) and estimated buyback value on the dashboard. Saving a species in **Seed library** (or opening the dashboard) back-fills `species_id` on seeds whose code prefix matches but were still unlinked.
 
-Then run `supabase/migrations/005_buyer_inquiries.sql` for the public homepage buyer inquiry form and admin inquiry list.
+Then run `supabase/migrations/006_profile_fields_and_photo_urls.sql` for grower profile columns, multi-photo check-ins (`photo_urls`), and the updated `handle_new_user` trigger (signup metadata → `profiles`).
 
 ### Admin access
 
@@ -127,12 +128,13 @@ Open [http://localhost:3000](http://localhost:3000).
 src/
   app/
     (auth)/          # Login & signup
-    (app)/           # Protected: dashboard, seeds, notifications
+    (app)/           # Protected: dashboard, seeds, notifications, profile
     (admin)/admin/   # Admin-only: seed registry, species library, buyer inquiries, reports
     auth/callback/   # Supabase OAuth/email callback
   components/        # UI components
   lib/
     actions.ts       # Server actions (seeds, forms, notifications)
+    profile-actions.ts # Grower profile updates
     buyer-inquiry-actions.ts  # Public buyer form + admin inquiry status
     biweekly.ts      # 14-day scheduling helpers
     notifications.ts # Missed-form detection

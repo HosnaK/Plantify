@@ -1,6 +1,6 @@
 import { format } from "date-fns";
 import { deriveHealthStatus } from "@/lib/admin-constants";
-import { growthPhotoUrl } from "@/lib/photos";
+import { reportPhotoUrls } from "@/lib/photos";
 import type { GrowthReport, LeafColor } from "@/lib/types";
 
 function leafColorLabel(color: LeafColor | null): string {
@@ -20,7 +20,7 @@ export function CheckInTimeline({ reports }: { reports: GrowthReport[] }) {
   return (
     <ol className="space-y-6">
       {reports.map((report, index) => {
-        const photoUrl = growthPhotoUrl(report.photo_path);
+        const photoUrls = reportPhotoUrls(report);
         const health = deriveHealthStatus(report);
 
         return (
@@ -96,13 +96,18 @@ export function CheckInTimeline({ reports }: { reports: GrowthReport[] }) {
               </dl>
 
               <div>
-                {photoUrl ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={photoUrl}
-                    alt={`Check-in photo ${format(new Date(report.submitted_at), "MMM d, yyyy")}`}
-                    className="h-48 w-full rounded-xl object-cover sm:h-56"
-                  />
+                {photoUrls.length > 0 ? (
+                  <div className={`grid gap-2 ${photoUrls.length > 1 ? "grid-cols-2 sm:grid-cols-3" : ""}`}>
+                    {photoUrls.map((src, i) => (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        key={`${report.id}-${i}`}
+                        src={src}
+                        alt={`Check-in photo ${i + 1} · ${format(new Date(report.submitted_at), "MMM d, yyyy")}`}
+                        className="h-40 w-full rounded-xl object-cover sm:h-48"
+                      />
+                    ))}
+                  </div>
                 ) : (
                   <div className="flex h-48 items-center justify-center rounded-xl border border-dashed border-emerald-200 bg-emerald-50/40 text-sm text-emerald-900/50 sm:h-56">
                     No photo

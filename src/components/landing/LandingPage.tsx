@@ -22,21 +22,20 @@ export function LandingPage({ isAuthenticated }: { isAuthenticated: boolean }) {
   return (
     <div className="overflow-x-hidden bg-white text-neutral-950">
       {/* Hero */}
-      <section className="relative min-h-[100dvh] overflow-hidden sm:min-h-[92vh]">
-        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+      <section className="relative h-screen overflow-hidden">
+        <div className="pointer-events-none absolute inset-0 z-0 h-full w-full">
           <YouTubeEmbed
             videoId="pJKSz4ieCjA"
             title="Plantify background"
             autoplay
             mute
             loop
-            className="absolute left-1/2 top-1/2 h-[140%] w-[140%] min-h-full min-w-full -translate-x-1/2 -translate-y-1/2 sm:h-[120%] sm:w-[120%]"
+            className="h-full w-full"
           />
         </div>
-        <div className="absolute inset-0 bg-white/85 sm:bg-white/80" />
         <LandingNav isAuthenticated={isAuthenticated} />
-        <div className="relative z-10 mx-auto flex min-h-[100dvh] max-w-6xl items-center justify-center px-4 pb-12 pt-28 sm:min-h-[92vh] sm:pb-16 sm:pt-32">
-          <div className="w-full max-w-xl rounded-sm bg-white px-5 py-8 text-center shadow-[0_8px_40px_rgba(0,0,0,0.08)] sm:px-10 sm:py-12 md:px-14 md:py-14">
+        <div className="relative z-10 flex h-screen w-full items-center justify-center px-4">
+          <div className="w-full max-w-lg rounded-2xl bg-white/90 px-16 py-14 text-center shadow-[0_8px_40px_rgba(0,0,0,0.12)] backdrop-blur-md">
             <div className="flex justify-center">
               <PlantifyLogo
                 href="/"
@@ -44,12 +43,12 @@ export function LandingPage({ isAuthenticated }: { isAuthenticated: boolean }) {
                 priority
               />
             </div>
-            <p className="mt-4 text-base leading-snug text-neutral-500 sm:mt-6 sm:text-lg md:text-xl">
-              Green Investment Platform One Seed at a Time
+            <p className="mt-5 text-base leading-snug text-neutral-500 sm:mt-6 sm:text-lg">
+              Green Investment Platform — One Seed at a Time
             </p>
             <a
               href="#pitch-video"
-              className="mt-6 inline-block w-full max-w-xs rounded-xl bg-[#f97316] px-6 py-3.5 text-sm font-semibold text-white shadow-md transition hover:bg-[#ea580c] sm:mt-8 sm:w-auto sm:px-8 sm:text-base"
+              className="mt-8 inline-block rounded-xl bg-[#1b3d3a] px-8 py-3.5 text-sm font-semibold text-white shadow-md transition hover:bg-[#152f2c] sm:text-base"
             >
               What is Plantify?
             </a>

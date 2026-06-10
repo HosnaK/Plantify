@@ -1,17 +1,62 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { submitGrowthReport } from "@/lib/actions";
 
 type CheckInFormProps = {
   seedId: string;
 };
 
+function syncInputFiles(input: HTMLInputElement, files: File[]) {
+  const dt = new DataTransfer();
+  for (const f of files) {
+    dt.items.add(f);
+  }
+  input.files = dt.files;
+}
+
 export function CheckInForm({ seedId }: CheckInFormProps) {
   const [sprouted, setSprouted] = useState<"" | "yes" | "no">("");
   const [pests, setPests] = useState<"" | "yes" | "no" | "other">("");
+  const [previews, setPreviews] = useState<{ file: File; url: string }[]>([]);
+  const [photoHint, setPhotoHint] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const showSproutedFields = sprouted === "yes";
+
+  useEffect(() => {
+    return () => {
+      previews.forEach((p) => URL.revokeObjectURL(p.url));
+    };
+  }, [previews]);
+
+  function onPhotosChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setPhotoHint(null);
+    const input = e.target;
+    const picked = Array.from(input.files ?? []).filter((f) => f.size > 0);
+    if (picked.length === 0) {
+      previews.forEach((p) => URL.revokeObjectURL(p.url));
+      setPreviews([]);
+      return;
+    }
+    let next = picked;
+    if (picked.length > 3) {
+      next = picked.slice(0, 3);
+      setPhotoHint("You can attach up to 3 photos per check-in. Only the first three were kept.");
+    }
+    syncInputFiles(input, next);
+    previews.forEach((p) => URL.revokeObjectURL(p.url));
+    setPreviews(next.map((file) => ({ file, url: URL.createObjectURL(file) })));
+  }
+
+  function clearPhotos() {
+    previews.forEach((p) => URL.revokeObjectURL(p.url));
+    setPreviews([]);
+    setPhotoHint(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  }
 
   return (
     <form
@@ -162,21 +207,50 @@ export function CheckInForm({ seedId }: CheckInFormProps) {
       )}
 
       <div>
-        <label htmlFor="photo" className="mb-1 block text-sm font-medium">
-          Growth photo{sprouted === "no" ? "" : " (optional)"}
+        <label htmlFor="photos" className="mb-1 block text-sm font-medium">
+          Check-in photos <span className="text-red-600">*</span>
         </label>
+        <p className="mb-2 text-xs text-emerald-900/65">
+          Upload 1–3 images (JPEG, PNG, or WebP). You&apos;ll see a preview before you submit.
+        </p>
         <input
-          id="photo"
-          name="photo"
+          ref={fileInputRef}
+          id="photos"
+          name="photos"
           type="file"
           accept="image/*"
-          required={sprouted === "no"}
+          multiple
+          required
+          onChange={onPhotosChange}
           className="w-full text-sm text-emerald-900 file:mr-4 file:rounded-lg file:border-0 file:bg-emerald-100 file:px-4 file:py-2 file:font-semibold file:text-emerald-800"
         />
-        {sprouted === "no" && (
-          <p className="mt-1 text-xs text-emerald-900/60">
-            Upload a photo of your seed — other fields are not required until it sprouts.
+        {photoHint && (
+          <p className="mt-2 text-xs font-medium text-amber-800" role="status">
+            {photoHint}
           </p>
+        )}
+        {previews.length > 0 && (
+          <div className="mt-3 space-y-2">
+            <p className="text-xs font-medium text-emerald-800">Preview</p>
+            <div className="flex flex-wrap gap-2">
+              {previews.map((p) => (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  key={p.url}
+                  src={p.url}
+                  alt={p.file.name}
+                  className="h-24 w-24 rounded-lg border border-emerald-100 object-cover"
+                />
+              ))}
+            </div>
+            <button
+              type="button"
+              onClick={clearPhotos}
+              className="text-xs font-semibold text-emerald-700 underline hover:text-emerald-900"
+            >
+              Clear photos
+            </button>
+          </div>
         )}
       </div>
 

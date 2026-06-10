@@ -54,7 +54,7 @@ export default function UpdatePasswordPage() {
       return;
     }
     setDone(true);
-    await supabase.auth.signOut();
+    await supabase.auth.signOut({ scope: "global" });
   }
 
   if (done) {

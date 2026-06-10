@@ -34,13 +34,13 @@ export function YouTubeEmbed({
   }
 
   return (
-    <div className={`relative overflow-hidden ${className}`}>
+    <div className={`relative h-full w-full min-h-0 overflow-hidden ${className}`}>
       <iframe
         src={`https://www.youtube.com/embed/${videoId}?${params.toString()}`}
         title={title}
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         allowFullScreen
-        className="absolute inset-0 h-full w-full border-0"
+        className="absolute inset-0 h-full w-full border-0 object-cover"
       />
     </div>
   );

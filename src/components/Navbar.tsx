@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
-import { signOut } from "@/lib/actions";
 import { PlantifyLogo } from "@/components/PlantifyLogo";
 
 export async function Navbar() {
@@ -35,6 +34,9 @@ export async function Navbar() {
           <Link href="/dashboard" className="hover:text-emerald-700">
             Dashboard
           </Link>
+          <Link href="/profile" className="hover:text-emerald-700">
+            Profile
+          </Link>
           <Link href="/notifications" className="relative hover:text-emerald-700">
             Notifications
             {unread > 0 && (
@@ -48,7 +50,7 @@ export async function Navbar() {
               Admin
             </Link>
           )}
-          <form action={signOut}>
+          <form action="/auth/sign-out" method="post">
             <button
               type="submit"
               className="rounded-lg border border-emerald-200 px-3 py-1.5 text-[#1b3d3a] hover:bg-emerald-50"

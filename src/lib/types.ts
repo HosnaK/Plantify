@@ -2,6 +2,14 @@ export type UserRole = "grower" | "admin";
 export type SeedAdminStatus = "active" | "mature" | "approved_for_buyback";
 export type DifficultyLevel = "Easy" | "Medium" | "Hard";
 
+export type GrowingExperience = "Total Beginner" | "Intermediate" | "Expert";
+export type GrowingSpace =
+  | "Balcony"
+  | "Indoor windowsill"
+  | "Garden"
+  | "Greenhouse"
+  | "Other";
+
 export type SeedSpecies = {
   id: string;
   plant_name: string;
@@ -20,6 +28,10 @@ export type Profile = {
   email: string | null;
   role: UserRole;
   created_at: string;
+  age: number | null;
+  occupation: string | null;
+  growing_experience: GrowingExperience | null;
+  growing_space: GrowingSpace | null;
 };
 
 export type Seed = {
@@ -56,6 +68,8 @@ export type GrowthReport = {
   height_cm: number | null;
   notes: string | null;
   photo_path: string | null;
+  /** Public URLs for 1–3 check-in photos (preferred when present). */
+  photo_urls?: string[] | null;
   has_sprouted: boolean;
   leaf_color: LeafColor | null;
   pests: PestsAnswer | null;

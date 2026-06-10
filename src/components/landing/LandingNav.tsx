@@ -11,7 +11,7 @@ const navLinks = [
 
 export function LandingNav({ isAuthenticated }: { isAuthenticated: boolean }) {
   return (
-    <header className="absolute inset-x-0 top-0 z-20">
+    <header className="absolute inset-x-0 top-0 z-30">
       <div className="mx-auto max-w-6xl px-4 py-4 sm:px-6 sm:py-5">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <PlantifyLogo href="/" priority className="!h-[4.5rem] sm:!h-20" />

@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { PlantifyLogo } from "@/components/PlantifyLogo";
-import { signOut } from "@/lib/actions";
 
 export function AdminNavbar() {
   return (
@@ -25,7 +24,7 @@ export function AdminNavbar() {
           <Link href="/dashboard" className="hover:text-emerald-700">
             Grower app
           </Link>
-          <form action={signOut}>
+          <form action="/auth/sign-out" method="post">
             <button
               type="submit"
               className="rounded-lg border border-emerald-200 px-3 py-1.5 text-[#1b3d3a] hover:bg-emerald-50"

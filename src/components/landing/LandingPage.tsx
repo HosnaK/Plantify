@@ -8,11 +8,11 @@ import { FAQAccordion } from "@/components/landing/FAQAccordion";
 import { OurTreesSection } from "@/components/landing/OurTreesSection";
 
 const teamMembers = [
-  { name: "Hosna Kachooei", role: "Founder & Chief Executive Officer" },
+  { name: "Hosna Kachooee", role: "Founder & Chief Executive Officer" },
   { name: "John Darden", role: "Chief Technical Officer" },
   { name: "Joanna Kurylo", role: "Advisor" },
   { name: "Eva Molina", role: "Chief Performance Officer" },
-  { name: "Mohsen Kachooei", role: "Advisor" },
+  { name: "Mohsen Kachooee", role: "Advisor" },
   { name: "Jacobo Echeverry", role: "Programmer" },
   { name: "Will Chan", role: "Chief Product Manager" },
   { name: "Jonathan Sepulveda", role: "Programmer" },
@@ -23,16 +23,17 @@ export function LandingPage({ isAuthenticated }: { isAuthenticated: boolean }) {
     <div className="overflow-x-hidden bg-white text-neutral-950">
       {/* Hero */}
       <section className="relative h-screen overflow-hidden">
-        <div className="pointer-events-none absolute inset-0 z-0 h-full w-full">
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
           <YouTubeEmbed
             videoId="pJKSz4ieCjA"
             title="Plantify background"
             autoplay
             mute
             loop
-            className="h-full w-full"
+            className="absolute left-1/2 top-1/2 h-[140%] w-[140%] min-h-full min-w-full -translate-x-1/2 -translate-y-1/2 sm:h-[120%] sm:w-[120%]"
           />
         </div>
+        <div className="absolute inset-0 bg-white/85 sm:bg-white/80" />
         <LandingNav isAuthenticated={isAuthenticated} />
         <div className="relative z-10 flex h-screen w-full items-center justify-center px-4">
           <div className="w-full max-w-lg rounded-2xl bg-white/90 px-16 py-14 text-center shadow-[0_8px_40px_rgba(0,0,0,0.12)] backdrop-blur-md">

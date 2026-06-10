@@ -18,6 +18,10 @@ export default async function AdminPage() {
       profiles (
         full_name,
         email
+      ),
+      seed_species (
+        code_prefix,
+        plant_name
       )
     `
     )
@@ -48,6 +52,12 @@ export default async function AdminPage() {
 
   const rows: AdminSeedRow[] = (seeds ?? []).map((seed) => {
     const profile = Array.isArray(seed.profiles) ? seed.profiles[0] : seed.profiles;
+    const species = Array.isArray(seed.seed_species)
+      ? seed.seed_species[0]
+      : seed.seed_species;
+    const library_species_label = species
+      ? `${species.code_prefix} · ${species.plant_name}`
+      : null;
     return {
       id: seed.id,
       seed_code: seed.seed_code,
@@ -57,6 +67,7 @@ export default async function AdminPage() {
       grower_name: profile?.full_name ?? null,
       grower_email: profile?.email ?? null,
       check_in_count: checkInCounts.get(seed.id) ?? 0,
+      library_species_label,
     };
   });
 

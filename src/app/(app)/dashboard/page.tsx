@@ -1,17 +1,12 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { hasReportForCurrentPeriod, seedStatus } from "@/lib/biweekly";
+import { linkUnlinkedSeedsToSpecies } from "@/lib/link-seed-species";
 import { syncMissedFormNotifications } from "@/lib/notifications";
 import { RegisterSeedPanel } from "@/components/RegisterSeedPanel";
 import { SeedList } from "@/components/SeedList";
+import { normalizeJoinedSpecies } from "@/lib/seed-species-normalize";
 import type { GrowthReport, SeedSpecies, SeedWithProgress } from "@/lib/types";
-
-function normalizeSpecies(
-  row: SeedSpecies | SeedSpecies[] | null | undefined
-): SeedSpecies | null {
-  if (row == null) return null;
-  return Array.isArray(row) ? (row[0] ?? null) : row;
-}
 
 const registerErrors: Record<string, string> = {
   missing_fields: "Seed code and plant name are required.",
@@ -35,6 +30,7 @@ export default async function DashboardPage({
     : null;
 
   await syncMissedFormNotifications(user.id);
+  await linkUnlinkedSeedsToSpecies(supabase, user.id);
 
   const { data: seeds } = await supabase
     .from("seeds")
@@ -59,7 +55,7 @@ export default async function DashboardPage({
     const seedReports = reports.filter((r) => r.seed_id === seed.id);
     const { status, daysUntilDue } = seedStatus(seed.next_due_at);
     const period_complete = hasReportForCurrentPeriod(seedReports, seed);
-    const seed_species = normalizeSpecies(
+    const seed_species = normalizeJoinedSpecies(
       seed.seed_species as SeedSpecies | SeedSpecies[] | null | undefined
     );
     return {

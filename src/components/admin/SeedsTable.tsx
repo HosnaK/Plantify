@@ -19,10 +19,11 @@ export function SeedsTable({ seeds }: { seeds: AdminSeedRow[] }) {
   return (
     <>
       <div className="hidden overflow-hidden rounded-2xl border border-emerald-100 bg-white shadow-sm md:block">
-        <table className="w-full text-left text-sm">
+        <table className="w-full min-w-[1000px] text-left text-sm">
           <thead className="border-b border-emerald-100 bg-emerald-50/60">
             <tr>
               <th className="px-4 py-3 font-semibold text-emerald-950">Seed Code</th>
+              <th className="px-4 py-3 font-semibold text-emerald-950">Library</th>
               <th className="px-4 py-3 font-semibold text-emerald-950">Grower Name</th>
               <th className="px-4 py-3 font-semibold text-emerald-950">Grower Email</th>
               <th className="px-4 py-3 font-semibold text-emerald-950">Date Registered</th>
@@ -40,6 +41,13 @@ export function SeedsTable({ seeds }: { seeds: AdminSeedRow[] }) {
                 <td className="px-4 py-3">
                   <span className="font-mono font-medium text-emerald-800">{seed.seed_code}</span>
                   <p className="text-xs text-emerald-900/50">{seed.plant_name}</p>
+                </td>
+                <td className="px-4 py-3 text-emerald-900/80">
+                  {seed.library_species_label ? (
+                    <span className="text-sm">{seed.library_species_label}</span>
+                  ) : (
+                    <span className="text-xs text-emerald-900/45">No match</span>
+                  )}
                 </td>
                 <td className="px-4 py-3 font-medium text-emerald-950">
                   {seed.grower_name ?? "—"}
@@ -69,6 +77,9 @@ export function SeedsTable({ seeds }: { seeds: AdminSeedRow[] }) {
           >
             <p className="font-mono font-semibold text-emerald-800">{seed.seed_code}</p>
             <p className="text-sm text-emerald-900/60">{seed.plant_name}</p>
+            <p className="mt-1 text-xs text-emerald-900/55">
+              Library: {seed.library_species_label ?? "No match"}
+            </p>
             <dl className="mt-3 grid grid-cols-2 gap-2 text-xs">
               <div>
                 <dt className="text-emerald-900/50">Grower</dt>

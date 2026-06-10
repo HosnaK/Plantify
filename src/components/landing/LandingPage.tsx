@@ -1,9 +1,11 @@
 import Link from "next/link";
 import { PlantifyLogo } from "@/components/PlantifyLogo";
+import { BuyerInquiryForm } from "@/components/landing/BuyerInquiryForm";
 import { LandingNav } from "@/components/landing/LandingNav";
 import { YouTubeEmbed } from "@/components/landing/YouTubeEmbed";
 import { HoverTiltBox, ImagePlaceholder } from "@/components/landing/HoverTiltBox";
 import { FAQAccordion } from "@/components/landing/FAQAccordion";
+import { OurTreesSection } from "@/components/landing/OurTreesSection";
 
 const teamMembers = [
   { name: "Hosna Kachooei", role: "Founder & Chief Executive Officer" },
@@ -16,7 +18,7 @@ const teamMembers = [
   { name: "Jonathan Sepulveda", role: "Programmer" },
 ];
 
-export function LandingPage() {
+export function LandingPage({ isAuthenticated }: { isAuthenticated: boolean }) {
   return (
     <div className="overflow-x-hidden bg-white text-neutral-950">
       {/* Hero */}
@@ -32,11 +34,15 @@ export function LandingPage() {
           />
         </div>
         <div className="absolute inset-0 bg-white/85 sm:bg-white/80" />
-        <LandingNav />
+        <LandingNav isAuthenticated={isAuthenticated} />
         <div className="relative z-10 mx-auto flex min-h-[100dvh] max-w-6xl items-center justify-center px-4 pb-12 pt-28 sm:min-h-[92vh] sm:pb-16 sm:pt-32">
           <div className="w-full max-w-xl rounded-sm bg-white px-5 py-8 text-center shadow-[0_8px_40px_rgba(0,0,0,0.08)] sm:px-10 sm:py-12 md:px-14 md:py-14">
             <div className="flex justify-center">
-              <PlantifyLogo className="!h-[5.5rem] sm:!h-[7rem] md:!h-[8rem]" priority />
+              <PlantifyLogo
+                href="/"
+                className="!h-[5.5rem] sm:!h-[7rem] md:!h-[8rem]"
+                priority
+              />
             </div>
             <p className="mt-4 text-base leading-snug text-neutral-500 sm:mt-6 sm:text-lg md:text-xl">
               Green Investment Platform One Seed at a Time
@@ -96,6 +102,8 @@ export function LandingPage() {
           </p>
         </div>
       </section>
+
+      <OurTreesSection />
 
       {/* Growing Made Easy */}
       <section className="mx-auto grid max-w-6xl items-center gap-8 px-4 py-14 md:grid-cols-2 md:gap-12 md:py-20 lg:gap-16 lg:py-24">
@@ -157,8 +165,23 @@ export function LandingPage() {
         </div>
       </section>
 
+      {/* Buyer inquiry */}
+      <section className="border-t border-emerald-100 bg-gradient-to-b from-emerald-50/80 to-white px-4 py-14 sm:py-20 md:py-24">
+        <div className="mx-auto max-w-3xl text-center">
+          <h2 className="text-2xl font-bold text-emerald-950 sm:text-3xl md:text-4xl">
+            Interested in ordering trees?
+          </h2>
+          <p className="mx-auto mt-3 max-w-xl text-sm text-emerald-900/70 sm:text-base">
+            Tell us what you need and we&apos;ll follow up with availability and next steps.
+          </p>
+        </div>
+        <div className="mx-auto mt-10 max-w-3xl rounded-2xl border border-emerald-100 bg-white p-6 shadow-sm shadow-emerald-900/5 sm:p-8">
+          <BuyerInquiryForm />
+        </div>
+      </section>
+
       <footer className="border-t border-neutral-200 px-4 py-8 text-center text-sm text-neutral-500">
-        <PlantifyLogo className="mx-auto !h-14 sm:!h-16 opacity-80" />
+        <PlantifyLogo href="/" className="mx-auto !h-14 sm:!h-16 opacity-80" />
         <p className="mt-3">
           <Link href="/login" className="underline hover:text-neutral-800">
             Sign in

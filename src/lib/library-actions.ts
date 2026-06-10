@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/admin";
+import { linkAllUnlinkedSeedsGlobally } from "@/lib/link-seed-species";
 import type { DifficultyLevel } from "@/lib/types";
 
 const difficulties: DifficultyLevel[] = ["Easy", "Medium", "Hard"];
@@ -63,7 +64,10 @@ export async function createSeedSpecies(formData: FormData) {
     return { error: error.message };
   }
 
+  await linkAllUnlinkedSeedsGlobally(supabase);
+
   revalidatePath("/admin/library");
+  revalidatePath("/admin");
   revalidatePath("/dashboard");
   return { success: true };
 }
@@ -92,7 +96,10 @@ export async function updateSeedSpecies(speciesId: string, formData: FormData) {
     return { error: error.message };
   }
 
+  await linkAllUnlinkedSeedsGlobally(supabase);
+
   revalidatePath("/admin/library");
+  revalidatePath("/admin");
   revalidatePath("/dashboard");
   return { success: true };
 }

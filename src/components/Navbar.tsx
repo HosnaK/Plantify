@@ -30,7 +30,7 @@ export async function Navbar() {
   return (
     <header className="border-b border-[#1b3d3a]/10 bg-white/80 backdrop-blur">
       <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-4">
-        <PlantifyLogo priority />
+        <PlantifyLogo href="/" priority />
         <nav className="flex flex-wrap items-center gap-4 text-sm font-medium text-emerald-950/80">
           <Link href="/dashboard" className="hover:text-emerald-700">
             Dashboard

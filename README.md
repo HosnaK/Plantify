@@ -17,6 +17,7 @@ A Next.js platform for commercial growers to register seed codes, submit biweekl
 - Notifications when a biweekly form is overdue (synced on dashboard & notifications page)
 - **Admin panel** (`/admin`) — all seeds, inline status updates, full check-in reports per seed
 - **Seed library** (`/admin/library`) — admin-only species catalogue; grower seed codes auto-link by prefix for buyback estimates
+- **Buyer inquiries** — homepage order form for wholesale tree buyers; admins review and update status at `/admin/buyer-inquiries`
 
 ## Setup
 
@@ -39,7 +40,9 @@ Then run `supabase/migrations/002_checkin_fields.sql` for sprout, leaf color, an
 
 Then run `supabase/migrations/003_admin.sql` for admin roles and seed pipeline status.
 
-Then run `supabase/migrations/004_seed_species.sql` for the admin-only species library (linked from grower seed codes by prefix) and estimated buyback value on the dashboard.
+Then run `supabase/migrations/004_seed_species.sql` for the admin-only species library (linked from grower seed codes by prefix) and estimated buyback value on the dashboard. Saving a species in **Seed library** (or opening the dashboard) back-fills `species_id` on seeds whose code prefix matches but were still unlinked.
+
+Then run `supabase/migrations/005_buyer_inquiries.sql` for the public homepage buyer inquiry form and admin inquiry list.
 
 ### Admin access
 
@@ -125,11 +128,12 @@ src/
   app/
     (auth)/          # Login & signup
     (app)/           # Protected: dashboard, seeds, notifications
-    (admin)/admin/   # Admin-only: seed registry, species library, reports
+    (admin)/admin/   # Admin-only: seed registry, species library, buyer inquiries, reports
     auth/callback/   # Supabase OAuth/email callback
   components/        # UI components
   lib/
     actions.ts       # Server actions (seeds, forms, notifications)
+    buyer-inquiry-actions.ts  # Public buyer form + admin inquiry status
     biweekly.ts      # 14-day scheduling helpers
     notifications.ts # Missed-form detection
     supabase/        # Browser, server, middleware clients

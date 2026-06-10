@@ -2,9 +2,19 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { format } from "date-fns";
 import { requireAdmin, adminStatusLabel } from "@/lib/admin";
+import { linkUnlinkedSeedsToSpecies } from "@/lib/link-seed-species";
 import { AdminStatusSelect } from "@/components/admin/AdminStatusSelect";
 import { CheckInTimeline } from "@/components/CheckInTimeline";
-import type { GrowthReport, SeedAdminStatus } from "@/lib/types";
+import { EstimatedValueBlock } from "@/components/EstimatedValueBlock";
+import { normalizeJoinedSpecies } from "@/lib/seed-species-normalize";
+import type { GrowthReport, SeedAdminStatus, SeedSpecies } from "@/lib/types";
+
+const usd = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+});
 
 export default async function AdminSeedReportPage({
   params,
@@ -14,11 +24,21 @@ export default async function AdminSeedReportPage({
   const { seedId } = await params;
   const { supabase } = await requireAdmin();
 
+  const { data: seedMeta } = await supabase
+    .from("seeds")
+    .select("user_id")
+    .eq("id", seedId)
+    .maybeSingle();
+  if (seedMeta?.user_id) {
+    await linkUnlinkedSeedsToSpecies(supabase, seedMeta.user_id);
+  }
+
   const { data: seed } = await supabase
     .from("seeds")
     .select(
       `
       *,
+      seed_species (*),
       profiles (
         full_name,
         email
@@ -39,6 +59,9 @@ export default async function AdminSeedReportPage({
     .order("submitted_at", { ascending: true });
 
   const chronological = (reports ?? []) as GrowthReport[];
+  const species = normalizeJoinedSpecies(
+    seed.seed_species as SeedSpecies | SeedSpecies[] | null | undefined
+  );
 
   return (
     <div className="space-y-8">
@@ -84,6 +107,49 @@ export default async function AdminSeedReportPage({
             {adminStatusLabel(seed.admin_status as SeedAdminStatus)}
           </p>
         </div>
+      </section>
+
+      <section className="rounded-2xl border border-emerald-100 bg-white p-5 shadow-sm">
+        <h2 className="text-lg font-semibold text-emerald-950">Seed library match</h2>
+        {species ? (
+          <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div>
+              <p className="text-xs text-emerald-900/60">Catalogue plant</p>
+              <p className="font-semibold text-emerald-950">{species.plant_name}</p>
+              <p className="font-mono text-sm text-emerald-700">{species.code_prefix}</p>
+            </div>
+            <div>
+              <p className="text-xs text-emerald-900/60">Buyback window</p>
+              <p className="font-semibold text-emerald-950">{species.buyback_period_weeks} weeks</p>
+              <p className="text-xs text-emerald-900/55">
+                Seed {usd.format(Number(species.seed_price))} → full buyback{" "}
+                {usd.format(Number(species.full_buyback_price))}
+              </p>
+            </div>
+            <div>
+              <p className="text-xs text-emerald-900/60">Difficulty</p>
+              <p className="font-semibold text-emerald-950">{species.difficulty_level}</p>
+            </div>
+            {species.environment_preferences ? (
+              <div className="sm:col-span-2 lg:col-span-3">
+                <p className="text-xs text-emerald-900/60">Environment</p>
+                <p className="text-sm text-emerald-900/80">{species.environment_preferences}</p>
+              </div>
+            ) : null}
+            <div className="sm:col-span-2 lg:col-span-3 border-t border-emerald-50 pt-4">
+              <p className="mb-2 text-xs font-medium text-emerald-900/60">Grower-facing estimate</p>
+              <EstimatedValueBlock species={species} checkInCount={chronological.length} />
+            </div>
+          </div>
+        ) : (
+          <p className="mt-3 text-sm text-emerald-900/70">
+            No species in the library matches this seed code prefix yet. Add or adjust a prefix in{" "}
+            <Link href="/admin/library" className="font-medium text-emerald-800 underline">
+              Seed library
+            </Link>{" "}
+            so the grower sees buyback progress on their dashboard.
+          </p>
+        )}
       </section>
 
       <section>

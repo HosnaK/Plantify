@@ -42,6 +42,8 @@ export type AdminSeedRow = {
   grower_name: string | null;
   grower_email: string | null;
   check_in_count: number;
+  /** Matched library species (prefix + catalogue name), if any */
+  library_species_label: string | null;
 };
 
 export type LeafColor = "green" | "yellow" | "brown";
@@ -80,4 +82,15 @@ export type SeedWithProgress = Seed & {
   days_until_due: number;
   period_complete: boolean;
   seed_species: SeedSpecies | null;
+};
+
+export type BuyerInquiryStatus = "new" | "in_review" | "contacted";
+
+export type BuyerInquiry = {
+  id: string;
+  full_name: string;
+  email: string;
+  order_details: string;
+  status: BuyerInquiryStatus;
+  created_at: string;
 };

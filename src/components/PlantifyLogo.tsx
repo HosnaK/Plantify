@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 
 type PlantifyLogoProps = {
   /** Defaults to site homepage */
@@ -13,16 +12,22 @@ export function PlantifyLogo({
   className = "",
   priority = false,
 }: PlantifyLogoProps) {
+  const external = href.startsWith("http://") || href.startsWith("https://");
   return (
-    <Link href={href} className="inline-flex shrink-0 items-center">
+    <a
+      href={href}
+      className="inline-flex shrink-0 items-center"
+      aria-label="Plantify home"
+      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+    >
       <Image
         src="/plantify-logo.png"
-        alt="Plantify"
+        alt=""
         width={360}
         height={96}
         priority={priority}
         className={`h-20 w-auto sm:h-[5.5rem] ${className}`}
       />
-    </Link>
+    </a>
   );
 }

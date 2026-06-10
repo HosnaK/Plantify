@@ -14,7 +14,7 @@ export function LandingNav({ isAuthenticated }: { isAuthenticated: boolean }) {
     <header className="absolute inset-x-0 top-0 z-30">
       <div className="mx-auto max-w-6xl px-4 py-4 sm:px-6 sm:py-5">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <PlantifyLogo href="/" priority className="!h-[4.5rem] sm:!h-20" />
+          <PlantifyLogo href="/" priority className="!h-[6.75rem] sm:!h-[7.5rem]" />
           <nav className="flex flex-wrap items-center gap-x-3 gap-y-2 text-xs font-medium text-emerald-900/80 sm:justify-end sm:gap-4 sm:text-sm">
             {navLinks.map((link) => (
               <Link key={link.label} href={link.href} className="hover:text-emerald-950">

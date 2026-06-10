@@ -93,23 +93,26 @@ export function LandingPage({ isAuthenticated }: { isAuthenticated: boolean }) {
         <div className="absolute inset-0 bg-white/85 sm:bg-white/80" />
         <LandingNav isAuthenticated={isAuthenticated} />
         <div className="relative z-10 flex h-screen w-full items-center justify-center px-4">
-          <div className="w-full max-w-lg rounded-2xl bg-white/90 px-16 py-14 text-center shadow-[0_8px_40px_rgba(0,0,0,0.12)] backdrop-blur-md">
-            <div className="flex justify-center">
-              <PlantifyLogo
-                href="/"
-                className="!h-[5.5rem] sm:!h-[7rem] md:!h-[8rem]"
-                priority
-              />
+          <div className="w-full max-w-2xl rounded-2xl bg-white/90 px-12 py-20 text-center shadow-[0_8px_40px_rgba(0,0,0,0.12)] backdrop-blur-md sm:px-16">
+            <div className="flex flex-col items-center gap-8">
+              <div className="flex justify-center">
+                <PlantifyLogo
+                  href="/"
+                  className="!h-[9.9rem] sm:!h-[12.6rem] md:!h-[14.4rem]"
+                  priority
+                />
+              </div>
+              <p className="mx-auto max-w-xl text-balance text-center text-[1.3rem] leading-snug text-neutral-500 sm:max-w-2xl sm:text-[1.4625rem] sm:leading-snug">
+                <span className="block sm:inline">Green Investment Platform —</span>{" "}
+                <span className="block sm:inline">One Seed at a Time</span>
+              </p>
+              <a
+                href="#pitch-video"
+                className="inline-block rounded-xl bg-[#1b3d3a] px-[2.4rem] py-4 text-sm font-semibold text-white shadow-md transition hover:bg-[#152f2c] sm:text-base"
+              >
+                What is Plantify?
+              </a>
             </div>
-            <p className="mt-5 text-base leading-snug text-neutral-500 sm:mt-6 sm:text-lg">
-              Green Investment Platform — One Seed at a Time
-            </p>
-            <a
-              href="#pitch-video"
-              className="mt-8 inline-block rounded-xl bg-[#1b3d3a] px-8 py-3.5 text-sm font-semibold text-white shadow-md transition hover:bg-[#152f2c] sm:text-base"
-            >
-              What is Plantify?
-            </a>
           </div>
         </div>
       </section>

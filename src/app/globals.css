@@ -1,5 +1,42 @@
 @import "tailwindcss";
 
+/* ITC Garamond Std — hero card & CTA (files in /public/fonts/) */
+@font-face {
+  font-family: "ITC Garamond Std Light Condensed Italic";
+  src: url("/fonts/itc-garamond-light-condensed-italic.otf") format("opentype");
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "ITC Garamond Std Light Condensed";
+  src: url("/fonts/itc-garamond-light-condensed.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "ITC Garamond Std Bold Narrow";
+  src: url("/fonts/itc-garamond-bold-narrow.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+.font-itc-garamond-display-italic {
+  font-family: "ITC Garamond Std Light Condensed Italic", "Times New Roman", serif;
+}
+
+.font-itc-garamond-condensed {
+  font-family: "ITC Garamond Std Light Condensed", "Times New Roman", serif;
+}
+
+.font-itc-garamond-bold-narrow {
+  font-family: "ITC Garamond Std Bold Narrow", "Times New Roman", serif;
+}
+
 :root {
   --background: #f4faf6;
   --foreground: #0f2f1f;

@@ -92,23 +92,18 @@ export function LandingPage({ isAuthenticated }: { isAuthenticated: boolean }) {
         </div>
         <div className="absolute inset-0 bg-white/85 sm:bg-white/80" />
         <LandingNav isAuthenticated={isAuthenticated} />
-        <div className="relative z-10 flex h-screen w-full items-center justify-center px-4">
-          <div className="w-full max-w-2xl rounded-2xl bg-white/90 px-12 py-20 text-center shadow-[0_8px_40px_rgba(0,0,0,0.12)] backdrop-blur-md sm:px-16">
+        <div className="relative z-10 flex h-screen w-full items-center justify-end px-4 pr-8 sm:pr-12 lg:pr-16">
+          <div className="w-full max-w-2xl rounded-2xl bg-white/90 px-10 py-16 text-center shadow-[0_8px_40px_rgba(0,0,0,0.12)] backdrop-blur-md sm:px-14 sm:py-20">
             <div className="flex flex-col items-center gap-8">
-              <div className="flex justify-center">
-                <PlantifyLogo
-                  href="/"
-                  className="!h-[9.9rem] sm:!h-[12.6rem] md:!h-[14.4rem]"
-                  priority
-                />
-              </div>
-              <p className="mx-auto max-w-xl text-balance text-center text-[1.3rem] leading-snug text-neutral-500 sm:max-w-2xl sm:text-[1.4625rem] sm:leading-snug">
-                <span className="block sm:inline">Green Investment Platform —</span>{" "}
-                <span className="block sm:inline">One Seed at a Time</span>
+              <h1 className="font-itc-garamond-display-italic text-6xl leading-none tracking-tight text-amber-700 sm:text-7xl md:text-8xl">
+                Plantify
+              </h1>
+              <p className="font-itc-garamond-condensed max-w-md text-balance text-2xl leading-snug text-neutral-900 sm:max-w-lg">
+                Green investment platform, one seed at a time
               </p>
               <a
                 href="#pitch-video"
-                className="inline-block rounded-xl bg-[#1b3d3a] px-[2.4rem] py-4 text-sm font-semibold text-white shadow-md transition hover:bg-[#152f2c] sm:text-base"
+                className="font-itc-garamond-bold-narrow inline-block rounded-xl bg-[#1b3d3a] px-[2.4rem] py-4 text-lg text-white shadow-md transition hover:bg-[#152f2c] sm:text-xl"
               >
                 What is Plantify?
               </a>

@@ -10,13 +10,24 @@ const navLinks = [
 
 export function LandingNav({ isAuthenticated }: { isAuthenticated: boolean }) {
   return (
-    <header className="absolute inset-x-0 top-0 z-30">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="flex min-h-20 flex-col justify-center gap-3 py-3 sm:flex-row sm:items-center sm:justify-between sm:py-0">
-          <Link href="/" className="inline-flex shrink-0 items-center" aria-label="Plantify home">
-            <img src="/logo.png" alt="" className="h-12 w-auto" width={180} height={48} />
+    <header className="absolute inset-x-0 top-0 z-30 bg-transparent">
+      <div className="mx-auto max-w-6xl bg-transparent px-4 sm:px-6">
+        <div className="flex min-h-20 w-full flex-col justify-center gap-3 py-3 sm:flex-row sm:items-center sm:py-0">
+          <Link
+            href="/"
+            className="inline-flex shrink-0 items-center bg-transparent"
+            aria-label="Plantify home"
+          >
+            <img
+              src="/logo.png"
+              alt=""
+              className="h-12 w-auto bg-transparent"
+              width={180}
+              height={48}
+              style={{ backgroundColor: "transparent" }}
+            />
           </Link>
-          <nav className="flex flex-wrap items-center gap-x-4 gap-y-2 text-base font-medium text-emerald-900/80 sm:justify-end sm:gap-5 sm:text-lg">
+          <nav className="ml-auto flex w-full flex-wrap items-center justify-end gap-x-4 gap-y-2 text-base font-medium text-emerald-900/80 sm:w-auto sm:gap-5 sm:text-lg">
             {navLinks.map((link) => (
               <Link key={link.label} href={link.href} className="hover:text-emerald-950">
                 {link.label}
@@ -30,7 +41,7 @@ export function LandingNav({ isAuthenticated }: { isAuthenticated: boolean }) {
                 Dashboard
               </Link>
             ) : (
-              <span className="flex flex-wrap items-center gap-2 sm:gap-3">
+              <span className="flex flex-wrap items-center justify-end gap-2 sm:gap-3">
                 <Link
                   href="/signup"
                   className="rounded-lg border border-emerald-300 bg-white px-5 py-2.5 text-emerald-950 transition hover:bg-emerald-50 sm:px-6 sm:py-3"

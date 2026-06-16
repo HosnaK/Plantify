@@ -84,18 +84,16 @@ export function LandingPage({ isAuthenticated }: { isAuthenticated: boolean }) {
           <YouTubeEmbed
             videoId="pJKSz4ieCjA"
             title="Plantify background"
-            autoplay
-            mute
-            loop
+            backgroundMode
             className="absolute left-1/2 top-1/2 h-[140%] w-[140%] min-h-full min-w-full -translate-x-1/2 -translate-y-1/2 sm:h-[120%] sm:w-[120%]"
           />
         </div>
         <div className="absolute inset-0 bg-white/85 sm:bg-white/80" />
         <LandingNav isAuthenticated={isAuthenticated} />
         <div className="relative z-10 flex h-screen w-full items-center justify-end px-4 pr-8 sm:pr-12 lg:pr-16">
-          <div className="w-full max-w-2xl rounded-2xl bg-white/90 px-10 py-16 text-center shadow-[0_8px_40px_rgba(0,0,0,0.12)] backdrop-blur-md sm:px-14 sm:py-20">
-            <div className="flex flex-col items-center gap-8">
-              <h1 className="font-itc-garamond-display-italic text-6xl leading-none tracking-tight text-amber-700 sm:text-7xl md:text-8xl">
+          <div className="w-full max-w-2xl rounded-2xl bg-white/90 py-16 pl-10 pr-10 text-left shadow-[0_8px_40px_rgba(0,0,0,0.12)] backdrop-blur-md sm:py-20 sm:pl-12 sm:pr-14">
+            <div className="flex flex-col items-start gap-8 text-left">
+              <h1 className="font-itc-garamond-display-italic text-6xl leading-none tracking-tight text-[#ea803b] sm:text-7xl md:text-8xl">
                 Plantify
               </h1>
               <p className="font-itc-garamond-condensed max-w-md text-balance text-2xl leading-snug text-neutral-900 sm:max-w-lg">

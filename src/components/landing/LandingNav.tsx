@@ -12,7 +12,7 @@ export function LandingNav({ isAuthenticated }: { isAuthenticated: boolean }) {
   return (
     <header className="absolute inset-x-0 top-0 z-30 bg-transparent">
       <div className="mx-auto max-w-6xl bg-transparent px-4 sm:px-6">
-        <div className="flex min-h-20 w-full flex-col justify-center gap-3 py-3 sm:flex-row sm:items-center sm:py-0">
+        <div className="flex min-h-20 w-full flex-row items-center justify-between gap-4 py-3 sm:py-0">
           <Link
             href="/"
             className="inline-flex shrink-0 items-center bg-transparent"
@@ -27,7 +27,7 @@ export function LandingNav({ isAuthenticated }: { isAuthenticated: boolean }) {
               style={{ backgroundColor: "transparent" }}
             />
           </Link>
-          <nav className="ml-auto flex w-full flex-wrap items-center justify-end gap-x-4 gap-y-2 text-base font-medium text-emerald-900/80 sm:w-auto sm:gap-5 sm:text-lg">
+          <nav className="flex min-w-0 flex-1 flex-wrap items-center justify-end gap-x-4 gap-y-2 text-base font-medium text-emerald-900/80 sm:gap-5 sm:text-lg">
             {navLinks.map((link) => (
               <Link key={link.label} href={link.href} className="hover:text-emerald-950">
                 {link.label}

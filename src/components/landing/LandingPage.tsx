@@ -96,11 +96,15 @@ export function LandingPage({ isAuthenticated }: { isAuthenticated: boolean }) {
             />
             <div className="relative z-10 mx-auto w-[90%] max-w-[960px] overflow-hidden rounded-[20px] bg-black sm:w-[78%] sm:rounded-[24px] md:w-[70%]">
               <div className="relative aspect-video w-full bg-black">
-                <YouTubeEmbed
-                  videoId="MLgYE36WyWY"
-                  title="Plantify Pitch Video"
-                  backgroundMode
-                  className="absolute inset-0 h-full w-full"
+                <video
+                  src={LANDING_IMAGES.heroVideo}
+                  className="absolute inset-0 h-full w-full object-cover"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="auto"
+                  aria-label="Plantify pitch video"
                 />
               </div>
             </div>

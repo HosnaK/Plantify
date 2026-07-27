@@ -22,6 +22,8 @@ export const LANDING_IMAGES = {
   whySeedsPlant: `${LANDING_STORAGE_BASE}/why-seeds-plant.png`,
   /** “Growing Made Easy” section — phone / app screenshot */
   growingMadeEasyApp: `${LANDING_STORAGE_BASE}/growing-made-easy-app.png`,
+  /** Hero pitch video (Supabase Storage MP4) */
+  heroVideo: `${LANDING_STORAGE_BASE}/plantify%20video.mp4`,
 } as const;
 
 export type TeamPhotoExtension = "jpg" | "jpeg" | "png" | "webp";

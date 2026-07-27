@@ -78,23 +78,29 @@ const teamMembers = [
 export function LandingPage({ isAuthenticated }: { isAuthenticated: boolean }) {
   return (
     <div className="overflow-x-hidden bg-[var(--Background-Background-1)] text-[var(--foreground)]">
-      {/* Hero — Figma Desktop frame */}
-      <section className="relative flex w-full flex-col items-center bg-[var(--Background-Background-1)] px-5 pb-5 sm:px-10 sm:pb-5">
+      {/* Hero */}
+      <section className="relative flex w-full flex-col items-center bg-[var(--Background-Background-1)] px-5 pb-8 sm:px-10 sm:pb-12">
         <LandingNav isAuthenticated={isAuthenticated} />
 
-        <div className="mx-auto flex w-full max-w-[1500px] flex-col items-stretch gap-12 sm:gap-20 lg:gap-[170px]">
-          <h1 className="font-display text-center text-[clamp(2.75rem,8vw,6rem)] font-normal leading-[0.85] tracking-[-0.05em] text-[var(--Black)]">
-            Green investment platform, one seed at a time
+        <div className="mx-auto flex w-full max-w-[1500px] flex-col items-center gap-10 sm:gap-14 md:gap-16">
+          <h1 className="font-display max-w-5xl text-center text-[clamp(2.5rem,7.5vw,6rem)] font-normal leading-[0.9] tracking-[-0.04em] text-[var(--Black)]">
+            Green investment platform, one
+            <br className="hidden sm:block" /> seed at a time
           </h1>
 
-          <div className="relative flex w-full items-end justify-center overflow-visible rounded-[30px] bg-[var(--brand-green)] px-4 pb-0 pt-28 sm:px-10 sm:pt-36 md:px-[10%] md:pt-40">
-            {/* iPad device frame */}
-            <div className="relative z-10 mx-auto w-full max-w-[907px] -translate-y-8 rounded-2xl border-x-2 border-t-2 border-white/50 bg-black p-[18px] shadow-[0_-4px_20px_rgba(0,0,0,0.10)] sm:-translate-y-16 md:-translate-y-24 lg:-translate-y-[115px]">
-              <div className="aspect-[870/607] w-full overflow-hidden rounded-2xl bg-neutral-900">
-                <img
-                  src={LANDING_IMAGES.growingMadeEasyApp}
-                  alt="Plantify grower app"
-                  className="h-full w-full object-cover object-top"
+          {/* Green band with overlapping chromeless pitch video */}
+          <div className="relative w-full">
+            <div
+              className="absolute inset-x-0 top-[14%] bottom-[10%] rounded-[24px] bg-[var(--brand-green)] sm:rounded-[30px] sm:top-[16%] sm:bottom-[12%]"
+              aria-hidden
+            />
+            <div className="relative z-10 mx-auto w-[90%] max-w-[960px] overflow-hidden rounded-[20px] bg-black sm:w-[78%] sm:rounded-[24px] md:w-[70%]">
+              <div className="relative aspect-video w-full bg-black">
+                <YouTubeEmbed
+                  videoId="MLgYE36WyWY"
+                  title="Plantify Pitch Video"
+                  backgroundMode
+                  className="absolute inset-0 h-full w-full"
                 />
               </div>
             </div>

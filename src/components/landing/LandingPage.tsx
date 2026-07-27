@@ -77,34 +77,26 @@ const teamMembers = [
 
 export function LandingPage({ isAuthenticated }: { isAuthenticated: boolean }) {
   return (
-    <div className="overflow-x-hidden bg-white text-neutral-950">
-      {/* Hero */}
-      <section className="relative h-screen overflow-hidden">
-        <div className="pointer-events-none absolute inset-0 overflow-hidden">
-          <YouTubeEmbed
-            videoId="pJKSz4ieCjA"
-            title="Plantify background"
-            backgroundMode
-            className="absolute left-1/2 top-1/2 h-[140%] w-[140%] min-h-full min-w-full -translate-x-1/2 -translate-y-1/2 sm:h-[120%] sm:w-[120%]"
-          />
-        </div>
-        <div className="absolute inset-0 bg-white/85 sm:bg-white/80" />
+    <div className="overflow-x-hidden bg-[var(--Background-Background-1)] text-[var(--foreground)]">
+      {/* Hero — Figma Desktop frame */}
+      <section className="relative flex w-full flex-col items-center bg-[var(--Background-Background-1)] px-5 pb-5 sm:px-10 sm:pb-5">
         <LandingNav isAuthenticated={isAuthenticated} />
-        <div className="relative z-10 flex h-screen w-full items-center justify-end px-4 pr-8 sm:pr-12 lg:pr-16">
-          <div className="w-full max-w-2xl rounded-2xl bg-white/90 py-16 pl-10 pr-10 text-left shadow-[0_8px_40px_rgba(0,0,0,0.12)] backdrop-blur-md sm:py-20 sm:pl-12 sm:pr-14">
-            <div className="flex flex-col items-start gap-8 text-left">
-              <h1 className="font-itc-garamond-display-italic text-6xl leading-none tracking-tight text-[#ea803b] sm:text-7xl md:text-8xl">
-                Plantify
-              </h1>
-              <p className="font-itc-garamond-condensed max-w-md text-balance text-2xl leading-snug text-neutral-900 sm:max-w-lg">
-                Green investment platform, one seed at a time
-              </p>
-              <a
-                href="#pitch-video"
-                className="font-itc-garamond-bold-narrow inline-block rounded-xl bg-[#1b3d3a] px-[2.4rem] py-4 text-lg text-white shadow-md transition hover:bg-[#152f2c] sm:text-xl"
-              >
-                What is Plantify?
-              </a>
+
+        <div className="mx-auto flex w-full max-w-[1500px] flex-col items-stretch gap-12 sm:gap-20 lg:gap-[170px]">
+          <h1 className="font-display text-center text-[clamp(2.75rem,8vw,6rem)] font-normal leading-[0.85] tracking-[-0.05em] text-[var(--Black)]">
+            Green investment platform, one seed at a time
+          </h1>
+
+          <div className="relative flex w-full items-end justify-center overflow-visible rounded-[30px] bg-[var(--brand-green)] px-4 pb-0 pt-28 sm:px-10 sm:pt-36 md:px-[10%] md:pt-40">
+            {/* iPad device frame */}
+            <div className="relative z-10 mx-auto w-full max-w-[907px] -translate-y-8 rounded-2xl border-x-2 border-t-2 border-white/50 bg-black p-[18px] shadow-[0_-4px_20px_rgba(0,0,0,0.10)] sm:-translate-y-16 md:-translate-y-24 lg:-translate-y-[115px]">
+              <div className="aspect-[870/607] w-full overflow-hidden rounded-2xl bg-neutral-900">
+                <img
+                  src={LANDING_IMAGES.growingMadeEasyApp}
+                  alt="Plantify grower app"
+                  className="h-full w-full object-cover object-top"
+                />
+              </div>
             </div>
           </div>
         </div>

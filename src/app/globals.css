@@ -37,16 +37,36 @@
   font-family: "ITC Garamond Std Bold Narrow", "Times New Roman", serif;
 }
 
+.font-display {
+  font-family: var(--font-crimson), "Times New Roman", serif;
+}
+
+.font-nav {
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
+}
+
 :root {
-  --background: #f4faf6;
-  --foreground: #0f2f1f;
+  --background: #ffffff;
+  --foreground: #000000;
+  --brand-green: #1c3d3a;
+  --brand-green-hover: #152f2c;
+  --brand-orange: #ea803b;
+  --Background-Background-1: #ffffff;
+  --Text-On-accent-1: #ffffff;
+  --Black: #000000;
+  --Accent-Accent-4: #1c3d3a;
+  --Text-Link: #000000;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-brand-green: var(--brand-green);
+  --color-brand-orange: var(--brand-orange);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-crimson);
+  --font-nav: var(--font-dm-sans);
 }
 
 body {
